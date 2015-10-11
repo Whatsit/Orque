@@ -27,11 +27,13 @@ class Player:
 			else:
 				move(check, True)
 
+	# dir holds the direction to move incoded as 0-3 (north, east, south, west).
+	# flag lets move now if the player has a key to unlock a potential door.
 	def move(self, dir, flag):
 		location = self.location
 		newLoc = location
 		curRoom = Map.layout[location[0]][location[1]]
-		if dir == 0:	#north
+		if dir == 0:	# north
 			check = curRoom.adjacencyList[0]
 			if check == 1 or flag == True:
 				newLoc = [location[0], location[1]+1]
@@ -43,7 +45,7 @@ class Player:
 				print('The door is locked')
 			else:
 				print('You hit a wall...')
-		elif dir == 1:	#east
+		elif dir == 1:	# east
 			check = curRoom.adjacencyList[1]
 			if check == 1 or flag == True:
 				newLoc = [location[0]+1, location[1]]
@@ -56,7 +58,7 @@ class Player:
 				print('The door is locked')
 			else:
 				print('You hit a wall...')
-		elif dir == 3:	#west
+		elif dir == 3:	# west
 			check = curRoom.adjacencyList[3]
 			if check == 1 or flag == True:
 				newLoc = [location[0]-1, location[1]]
@@ -68,7 +70,7 @@ class Player:
 				print('The door is locked')
 			else:
 				print('You hit a wall...')
-		elif dir == 2:	#south
+		elif dir == 2:	# south
 			check = curRoom.adjacencyList[2]
 			if check == 1 or flag == True:
 				newLoc = [location[0], location[1]-1]
