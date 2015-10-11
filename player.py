@@ -23,7 +23,7 @@ class Player:
 		else:
 			check = Room.checkDoor()
 			if check == None:
-				print('No door you idiot')
+				print('No door')
 			else:
 				move(check, True)
 
