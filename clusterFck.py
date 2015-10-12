@@ -1,3 +1,4 @@
+import settings
 #------------------------------------------------------------------------------------------
 #Player class
 class Player:
@@ -28,10 +29,10 @@ class Player:
 			else:
 				move(check, True)
 
-	def move(self, dir, flag, Map):
+	def move(self, dir, flag):
 		location = self.location
 		newLoc = location
-		curRoom = Map.layout[location[0]][location[1]]
+		curRoom = settings.mapContainer[0].layout[location[0]][location[1]]
 		if dir == 0:	#north
 			check = curRoom.adjacencyList[0]
 			if check == 1 or flag == True:
@@ -49,7 +50,7 @@ class Player:
 			if check == 1 or flag == True:
 				newLoc = [location[0]+1, location[1]]
 				curRoom.playerList.remove(self)
-				newRoom = Map.layout[newLoc[0]][newLoc[1]]
+				newRoom = settings.mapContainer[0].layout[newLoc[0]][newLoc[1]]
 				#newRoom.playerList.append(self)
 				location = newLoc
 				print("I moved bitches")
