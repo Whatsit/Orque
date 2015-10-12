@@ -1,5 +1,5 @@
 from gameMap import *
-class Player:
+class Player(object):
 	def __init__(self, id, loc):
 		self.playerId = id
 		self.name = "Default"
