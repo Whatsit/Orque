@@ -10,3 +10,11 @@ class Room:
                 return self.adjacencyList.index(x)
             else
                 return None
+
+class PuzzleRoom(Room):
+	def __init__(self):
+        self.itemList = []
+        self.playerList = []
+        self.adjacencyList = []
+    	self.puzzle = []            # Puzzle description
+    	self.solution = []            # Solution to puzzle
