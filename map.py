@@ -1,6 +1,6 @@
 MAPSIZE = 3 
 
-class Map:
+class Map(object):
 	def __init__(self):
 		self.layout = [[for x in range(MAPSIZE)] for x in range(MAPSIZE)]
 
