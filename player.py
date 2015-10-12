@@ -82,3 +82,4 @@ class Player(object):
 				print('The door is locked')
 			else:
 				print('You hit a wall...')
+				
