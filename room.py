@@ -13,8 +13,6 @@ class Room:
 
 class PuzzleRoom(Room):
 	def __init__(self):
-        self.itemList = []
-        self.playerList = []
-        self.adjacencyList = []
+		super.__init__()
     	self.puzzle = []            # Puzzle description
     	self.solution = []            # Solution to puzzle
