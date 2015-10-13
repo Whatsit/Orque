@@ -1,5 +1,6 @@
-from gameMap import *
-class Player(object):
+import config
+
+class Player:
 	def __init__(self, id, loc):
 		self.playerId = id
 		self.name = "Default"
@@ -23,63 +24,98 @@ class Player(object):
 		else:
 			check = Room.checkDoor()
 			if check == None:
-				print('No door')
+				print('No door you idiot')
 			else:
 				move(check, True)
 
-	# dir holds the direction to move incoded as 0-3 (north, east, south, west).
-	# flag lets move now if the player has a key to unlock a potential door.
+	def search(self):
+		items = ""
+		for i in config.map.layout[self.location[0]][self.location[1]].itemList:
+			items += i.name
+		
+		if items == "":
+			print("There are no items in the room")
+		else:
+			print("The follwing items are in the room: %s" % items)
+
+	def parseCommand(self):
+		cmd = self.command.split(" ")
+		if cmd[0] == "move":
+			if cmd[1] == "north":
+				self.move(0,False)
+			elif cmd[1] == "east":
+				self.move(1,False)
+			elif cmd[1] == "south":
+				self.move(2,False)
+			elif cmd[1] == "west":
+				self.move(3,False)
+			else:
+				print("Please input valid direction")
+		elif cmd[0] == "search":
+			self.search()
+		else:
+			print("Please input valid command")
+
+
+
 	def move(self, dir, flag):
 		location = self.location
-		newLoc = location
-		curRoom = Map.layout[location[0]][location[1]]
-		if dir == 0:	# north
+		newLoc = self.location
+		curRoom = config.map.layout[location[0]][location[1]]
+		if dir == 0:	#north
 			check = curRoom.adjacencyList[0]
 			if check == 1 or flag == True:
-				newLoc = [location[0], location[1]+1]
+				newLoc = [location[0], location[1]-1]
 				curRoom.playerList.remove(self)
-				newRoom = Map.layout[newLoc[0]][newLoc[1]]
+				newRoom = config.map.layout[newLoc[0]][newLoc[1]]
 				newRoom.playerList.append(self)
-				location = newLoc
+				self.location = newLoc
+				print("You moved north")
 			elif check == 2 and flag == false:
 				print('The door is locked')
 			else:
 				print('You hit a wall...')
-		elif dir == 1:	# east
+			print(self.location)
+		elif dir == 1:	#east
 			check = curRoom.adjacencyList[1]
 			if check == 1 or flag == True:
 				newLoc = [location[0]+1, location[1]]
 				curRoom.playerList.remove(self)
-				newRoom = Map.layout[newLoc[0]][newLoc[1]]
+				newRoom = config.map.layout[newLoc[0]][newLoc[1]]
 				newRoom.playerList.append(self)
-				location = newLoc
-				print("I moved bitches")
+				self.location = newLoc
+				print("You moved east")
 			elif check == 2 and flag == false:
 				print('The door is locked')
 			else:
 				print('You hit a wall...')
-		elif dir == 3:	# west
+			print(self.location)
+		elif dir == 2:	#south
+			check = curRoom.adjacencyList[2]
+			if check == 1 or flag == True:
+				newLoc = [location[0], location[1]+1]
+				curRoom.playerList.remove(self)
+				newRoom = config.map.layout[newLoc[0]][newLoc[1]]
+				newRoom.playerList.append(self)
+				self.location = newLoc
+				print("You moved south")
+			elif check == 2 and flag == false:
+				print('The door is locked')
+			else:
+				print('You hit a wall...')
+			print(self.location)
+		elif dir == 3:	#west
 			check = curRoom.adjacencyList[3]
 			if check == 1 or flag == True:
 				newLoc = [location[0]-1, location[1]]
 				curRoom.playerList.remove(self)
-				newRoom = Map.layout[newLoc[0]][newLoc[1]]
+				newRoom = config.map.layout[newLoc[0]][newLoc[1]]
 				newRoom.playerList.append(self)
-				location = newLoc
+				self.location = newLoc
+				print("You moved west")
 			elif check == 2 and flag == false:
 				print('The door is locked')
 			else:
 				print('You hit a wall...')
-		elif dir == 2:	# south
-			check = curRoom.adjacencyList[2]
-			if check == 1 or flag == True:
-				newLoc = [location[0], location[1]-1]
-				curRoom.playerList.remove(self)
-				newRoom = Map.layout[newLoc[0]][newLoc[1]]
-				newRoom.playerList.append(self)
-				location = newLoc
-			elif check == 2 and flag == false:
-				print('The door is locked')
-			else:
-				print('You hit a wall...')
-				
+			print(self.location)
+		
