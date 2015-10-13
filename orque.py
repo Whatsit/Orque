@@ -34,13 +34,14 @@ while True:
 	break
 	
 
-'''
+
 	if timer < 1:
 		timer += 1
 		time.sleep(1)
 	else:
 		for p in range(len(playerList)):
 			cmd = playerList[p].command.split(" ")
-			print(cmd)
+			cmd = determine(cmd)
+			execute(cmd)
 		break
-'''
+
