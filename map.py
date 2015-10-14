@@ -21,10 +21,10 @@ class Map:
 				if j == 0:
 					self.layout[i][j].adjacencyList[0] = 0
 					#print("No North")
-				if i == MAPSIZE-1:
+				if i == COLS-1:
 					self.layout[i][j].adjacencyList[1] = 0
 					#print("No East")
-				if j == MAPSIZE-1:
+				if j == ROWS-1:
 					self.layout[i][j].adjacencyList[2] = 0
 					#print("No South")
 				if i == 0:
