@@ -1,4 +1,5 @@
 import config
+from room import Room
 
 class Player:
 	def __init__(self, id, loc):
@@ -10,13 +11,13 @@ class Player:
 		self.command = ""
 
 	def addItem(self, item):
-		inventory.append(item)
+		self.inventory.append(item)
 
 	def removeItem(self, item):
-		inventory.remove(item)
+		self.inventory.remove(item)
 
 	def updateCom(self, string):
-		command = string
+		self.command = string
 
 	def useItem(self):
 		if not inventory:
@@ -53,10 +54,33 @@ class Player:
 				print("Please input valid direction")
 		elif cmd[0] == "search":
 			self.search()
+		elif cmd[0] == "inventory":
+			self.printInventory()
+		elif cmd[0] == "get":
+			self.getItem()
 		else:
 			print("Please input valid command")
 
+	#Picks up key from room(temporary)
+	def getItem(self):
+		curRoom = config.map.layout[self.location[0]][self.location[1]]
+		if not curRoom.itemList:
+			print("There is no item to get from this room")
+		else:
+			self.inventory.append(curRoom.itemList[0])
+			curRoom.itemList.pop()
+			print("You got some items")
+			self.printInventory()
 
+	def printInventory(self):
+		items = ""
+		for i in self.inventory:
+			items += i.name
+		
+		if items == "":
+			print("There are no items in your inventory")
+		else:
+			print("The follwing items are in your inventory: %s" % items)
 
 	def move(self, dir, flag):
 		location = self.location
@@ -71,7 +95,7 @@ class Player:
 				newRoom.playerList.append(self)
 				self.location = newLoc
 				print("You moved north")
-			elif check == 2 and flag == false:
+			elif check == 2 and flag == False:
 				print('The door is locked')
 			else:
 				print('You hit a wall...')
@@ -85,7 +109,7 @@ class Player:
 				newRoom.playerList.append(self)
 				self.location = newLoc
 				print("You moved east")
-			elif check == 2 and flag == false:
+			elif check == 2 and flag == False:
 				print('The door is locked')
 			else:
 				print('You hit a wall...')
@@ -99,7 +123,7 @@ class Player:
 				newRoom.playerList.append(self)
 				self.location = newLoc
 				print("You moved south")
-			elif check == 2 and flag == false:
+			elif check == 2 and flag == False:
 				print('The door is locked')
 			else:
 				print('You hit a wall...')
@@ -113,9 +137,11 @@ class Player:
 				newRoom.playerList.append(self)
 				self.location = newLoc
 				print("You moved west")
-			elif check == 2 and flag == false:
+			elif check == 2 and flag == False:
 				print('The door is locked')
 			else:
 				print('You hit a wall...')
 			print(self.location)
+
+		config.map.layout[self.location[0]][self.location[1]].describe()
 		
