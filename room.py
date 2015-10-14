@@ -13,6 +13,7 @@ value in list corresponds to connector type
 0 => wall
 1 => corridor
 2 => door
+3 => uninitialized
 '''
 
 class Room:
@@ -20,7 +21,7 @@ class Room:
 		self.roomType = type
 		self.itemList = []
 		self.playerList = []
-		self.adjacencyList = [1,1,1,1]
+		self.adjacencyList = [3,3,3,3]
 
 	def describe(self):
 		if self.roomType == 1:
