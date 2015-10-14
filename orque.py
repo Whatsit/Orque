@@ -9,7 +9,7 @@ timer = 0
 
 #Initialize map and rooms
 config.map = Map()
-config.map.simpleSquareMap()
+config.map.randomConnectedMap()
 
 #Initialize and spawn players
 playerList = [Player(1,[0,0])]
