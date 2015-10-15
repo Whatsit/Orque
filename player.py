@@ -65,7 +65,7 @@ class Player:
 	def getItem(self):
 		curRoom = config.map.layout[self.location[0]][self.location[1]]
 		if not curRoom.itemList:
-			print("There is no item to get from this room")
+			print("There is no item to gotet from this room")
 		else:
 			self.inventory.append(curRoom.itemList[0])
 			curRoom.itemList.pop()
@@ -86,10 +86,11 @@ class Player:
 		location = self.location
 		newLoc = self.location
 		curRoom = config.map.layout[location[0]][location[1]]
+		print(curRoom.adjacencyList)
 		if dir == 0:	#north
 			check = curRoom.adjacencyList[0]
 			if check == 1 or flag == True:
-				newLoc = [location[0], location[1]-1]
+				newLoc = [location[0]-1, location[1]]
 				curRoom.playerList.remove(self)
 				newRoom = config.map.layout[newLoc[0]][newLoc[1]]
 				newRoom.playerList.append(self)
@@ -103,7 +104,7 @@ class Player:
 		elif dir == 1:	#east
 			check = curRoom.adjacencyList[1]
 			if check == 1 or flag == True:
-				newLoc = [location[0]+1, location[1]]
+				newLoc = [location[0], location[1]+1]
 				curRoom.playerList.remove(self)
 				newRoom = config.map.layout[newLoc[0]][newLoc[1]]
 				newRoom.playerList.append(self)
@@ -117,7 +118,7 @@ class Player:
 		elif dir == 2:	#south
 			check = curRoom.adjacencyList[2]
 			if check == 1 or flag == True:
-				newLoc = [location[0], location[1]+1]
+				newLoc = [location[0]+1, location[1]]
 				curRoom.playerList.remove(self)
 				newRoom = config.map.layout[newLoc[0]][newLoc[1]]
 				newRoom.playerList.append(self)
@@ -131,7 +132,7 @@ class Player:
 		elif dir == 3:	#west
 			check = curRoom.adjacencyList[3]
 			if check == 1 or flag == True:
-				newLoc = [location[0]-1, location[1]]
+				newLoc = [location[0], location[1]-1]
 				curRoom.playerList.remove(self)
 				newRoom = config.map.layout[newLoc[0]][newLoc[1]]
 				newRoom.playerList.append(self)
@@ -144,4 +145,8 @@ class Player:
 			print(self.location)
 
 		config.map.layout[self.location[0]][self.location[1]].describe()
+		if check == 1:
+			print(newRoom.adjacencyList)
+		else:
+			print(curRoom.adjacencyList)
 		
