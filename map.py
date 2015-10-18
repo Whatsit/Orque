@@ -1,8 +1,11 @@
 from room import Room
 from random import randint
+from lib.termcolor import colored
+from lib.colorama import init
+init()
 
-ROWS = 3
-COLS = 4
+ROWS = 5
+COLS = 10
 
 class Map:
 	def __init__(self):
@@ -69,7 +72,10 @@ class Map:
 					midLine += " "
 				#Mid line Room
 				if self.layout[i][j].roomType == 0:
-					midLine += "N"
+					if not self.layout[i][j].playerList:
+						midLine += "N"
+					else:
+						midLine += colored("N", "red")
 				else:
 					midLine += "P"
 				#Mid line East

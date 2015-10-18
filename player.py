@@ -1,4 +1,5 @@
 import config
+from map import Map
 from room import Room
 
 class Player:
@@ -149,4 +150,5 @@ class Player:
 			print(newRoom.adjacencyList)
 		else:
 			print(curRoom.adjacencyList)
+		config.map.printMap()
 		
