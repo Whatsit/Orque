@@ -14,9 +14,6 @@ from map import Map
 from item import Item
 from ui import UI
 
-#UI test lib
-from tkinter import *
-
 timer = 0
 
 #Initialize map and rooms
