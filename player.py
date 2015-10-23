@@ -1,5 +1,4 @@
 import config
-import itertools
 from map import Map
 from room import Room
 
@@ -11,8 +10,6 @@ class Player:
 		self.inventory = []
 		self.location = loc
 		self.command = ""
-		self.playerPath = [loc]
-
 
 	def addItem(self, item):
 		self.inventory.append(item)
@@ -23,76 +20,111 @@ class Player:
 	def updateCom(self, string):
 		self.command = string
 
-	def hasItemByName(self, itemName):
-		for x in range(0, len(self.inventory)):
-			item = self.inventory[x]
-			if item.name == itemName:
-				return True
-		return False
-		
-	def useItem(self, itemName):
-		if not self.inventory:
-			print('Inventory is empty')
+	def useItem(self):
+		if not inventory:
+			print('No item')
 		else:
-			if not self.hasItemByName(itemName):
-				print('There is no item called ', itemName, ' in inventory')
+			check = Room.checkDoor()
+			if check == None:
+				print('No door you idiot')
 			else:
-				curRoom = config.map.layout[self.location[0]][self.location[1]]
-				check = curRoom.checkDoor()
-				if check == None:
-					print('No door you idiot')
-				else:
-					move(check, True)
+				move(check, True)
 
 	def search(self):
 		items = ""
 		for i in config.map.layout[self.location[0]][self.location[1]].itemList:
 			items += i.name
-
+		
 		if items == "":
 			print("There are no items in the room")
 		else:
 			print("The follwing items are in the room: %s" % items)
+			
 
 	def parseCommand(self):
+		#FUCKING TOTAL FREEDOM BITCH TEMPLATE 
+		
+		'''
+		Example inputss:
+			I want to move right
+			I want to move left
+			I want to move west
+			I want to move up
+			Down is the direction I want to move
+			right
+			up
+			grab							( will get key)
+			backpack						( display inventory)
+			down search move left 			(this input moves you down, more restrictions?)
+			up dasioda dwjdnad adonad		(this moves you up, more restrictions?)
+			and a whole bunch of other shit  
+			
+			But is it too much freedom? 
+		'''
+		
+		PossibleMoves = ['down','south','bottom','bot','top','up','north','left','west','right','east']
+		MoveIndicate = ['move', 'run', 'walk']
+		Down = ['down','south','bottom','bot']
+		Up = ['top','up','north']
+		Left = ['left','west']
+		Right = ['right','east']
+		PossibleSearches = ['search','find','explore','examine']
+		PossibleInventories = ['inventory','backpack','items','found']
+		PossibleGet = ['get','take','steal','grab']
 		cmd = self.command.split(" ")
-		if cmd[0] == "move":
-			if len(cmd) > 1:
-				if cmd[1] == "north":
-					self.move(0,False)
-				elif cmd[1] == "east":
-					self.move(1,False)
-				elif cmd[1] == "south":
-					self.move(2,False)
-				elif cmd[1] == "west":
-					self.move(3,False)
+		for i in range(0, len(cmd)):
+			s = cmd[i]
+			if s in MoveIndicate:						#if move is found first, then check next input for direction
+				if i != len(cmd)-1:						#if there is anything after move command
+					if cmd[i+1] in Up:
+						self.move(0,False)
+					elif cmd[i+1] in Right:
+						self.move(1,False)
+					elif cmd[i+1] in Down:
+						self.move(2,False)
+					elif cmd[i+1] in Left:
+						self.move(3,False)
+					else:
+						print("Please type in a valid direction to move")
+					break
 				else:
-					print("Please input valid direction")
-			else:
-				print("Please include a valid direction")
-		elif cmd[0] == "search":
-			self.search()
-		elif cmd[0] == "inventory":
-			self.printInventory()
-		elif cmd[0] == "get":
-			if len(cmd) > 1:
-				self.getItem(cmd[1])
-			else:
-				print("Please include an item name")
-		elif cmd[0] == "use":
-			if len(cmd) > 1:
-				self.useItem(cmd[1])
-			else:
-				print("Please include an item name")
-		else:
-			print("Please input valid command")
+					print("Please type in a direction to move")
+					break
+			elif s in PossibleMoves:				#if direction is indicated without move 
+				if cmd[i] in Up:
+					self.move(0,False)
+				if cmd[i] in Right:
+					self.move(1,False)
+				if cmd[i] in Down:
+					self.move(2,False)
+				if cmd[i] in Left:
+					self.move(3,False)
+				break
+			elif s in PossibleSearches:
+				self.search()
+				i = len(cmd)
+				break
+			elif s in PossibleInventories:
+				self.printInventory()
+				i = len(cmd)
+				break
+			elif s in PossibleGet:
+				self.getItem()
+				i = len(cmd)	
+				break	
+			elif i == len(cmd)-1:				#no valid commands were found
+				print("Please input valid command")
+				
+				
+			
+
+			
 
 	#Picks up key from room(temporary)
-	def getItem(self, itemName):
+	def getItem(self):
 		curRoom = config.map.layout[self.location[0]][self.location[1]]
-		
-		if not curRoom.hasItemByName(itemName):
-			print("There is no item named ", itemName ," to get from this room")
+		if not curRoom.itemList:
+			print("There is no item to gotet from this room")
 		else:
 			self.inventory.append(curRoom.itemList[0])
 			curRoom.itemList.pop()
@@ -103,12 +135,11 @@ class Player:
 		items = ""
 		for i in self.inventory:
 			items += i.name
-
+		
 		if items == "":
 			print("There are no items in your inventory")
 		else:
 			print("The follwing items are in your inventory: %s" % items)
-
 	def move(self, dir, flag):
 		location = self.location
 		newLoc = self.location
@@ -122,11 +153,7 @@ class Player:
 				newRoom = config.map.layout[newLoc[0]][newLoc[1]]
 				newRoom.playerList.append(self)
 				self.location = newLoc
-				self.playerPath.append(newLoc)
-				self.playerPath.sort()
-				self.playerPath = list(k for k,_ in itertools.groupby(self.playerPath))
 				print("You moved north")
-				print(self.playerPath)
 			elif check == 2 and flag == False:
 				print('The door is locked')
 			else:
@@ -140,9 +167,6 @@ class Player:
 				newRoom = config.map.layout[newLoc[0]][newLoc[1]]
 				newRoom.playerList.append(self)
 				self.location = newLoc
-				self.playerPath.append(newLoc)
-				self.playerPath.sort()
-				self.playerPath = list(k for k,_ in itertools.groupby(self.playerPath))
 				print("You moved east")
 			elif check == 2 and flag == False:
 				print('The door is locked')
@@ -157,9 +181,6 @@ class Player:
 				newRoom = config.map.layout[newLoc[0]][newLoc[1]]
 				newRoom.playerList.append(self)
 				self.location = newLoc
-				self.playerPath.append(newLoc)
-				self.playerPath.sort()
-				self.playerPath = list(k for k,_ in itertools.groupby(self.playerPath))
 				print("You moved south")
 			elif check == 2 and flag == False:
 				print('The door is locked')
@@ -174,9 +195,6 @@ class Player:
 				newRoom = config.map.layout[newLoc[0]][newLoc[1]]
 				newRoom.playerList.append(self)
 				self.location = newLoc
-				self.playerPath.append(newLoc)
-				self.playerPath.sort()
-				self.playerPath = list(k for k,_ in itertools.groupby(self.playerPath))
 				print("You moved west")
 			elif check == 2 and flag == False:
 				print('The door is locked')
@@ -190,3 +208,4 @@ class Player:
 		else:
 			print(curRoom.adjacencyList)
 		config.map.printMap()
+		
