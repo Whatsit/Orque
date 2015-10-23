@@ -15,7 +15,6 @@ class Player:
 		self.command = ""
 		self.playerPath = [loc]
 
-
 	def addItem(self, item):
 		self.inventory.append(item)
 
@@ -25,6 +24,7 @@ class Player:
 	def updateCom(self, string):
 		self.command = string
 
+<<<<<<< HEAD
 	def hasItemByName(self, itemName):
 		for x in range(0, len(self.inventory)):
 			item = self.inventory[x]
@@ -35,10 +35,17 @@ class Player:
 	def useItem(self, itemName, dir):
 		if not self.inventory:
 			print('Inventory is empty')
+=======
+	def useItem(self):
+		if not inventory:
+			print('No item')
+>>>>>>> refs/remotes/Whatsit/master
 		else:
-			if not self.hasItemByName(itemName):
-				print('There is no item called ', itemName, ' in inventory')
+			check = Room.checkDoor()
+			if check == None:
+				print('No door you idiot')
 			else:
+<<<<<<< HEAD
 				curRoom = config.map.layout[self.location[0]][self.location[1]]
 				check = curRoom.checkDoor()
 				print(check)
@@ -55,10 +62,14 @@ class Player:
 								print("You hit a wall")
 						else:
 							print("Invalid direction parameter")
+=======
+				move(check, True)
+>>>>>>> refs/remotes/Whatsit/master
 
 	def search(self):
 		items = ""
 		for i in config.map.layout[self.location[0]][self.location[1]].itemList:
+<<<<<<< HEAD
 			items += i.name + ", "
 		items = items[:-2]
 
@@ -66,9 +77,48 @@ class Player:
 			print("There are no items in the room")
 		else:
 			print("The following items are in the room: %s" % items)
+=======
+			items += i.name
+		
+		if items == "":
+			print("There are no items in the room")
+		else:
+			print("The follwing items are in the room: %s" % items)
+			
+>>>>>>> refs/remotes/Whatsit/master
 
 	def parseCommand(self):
+		#FUCKING TOTAL FREEDOM BITCH TEMPLATE 
+		
+		'''
+		Example inputss:
+			I want to move right
+			I want to move left
+			I want to move west
+			I want to move up
+			Down is the direction I want to move
+			right
+			up
+			grab							( will get key)
+			backpack						( display inventory)
+			down search move left 			(this input moves you down, more restrictions?)
+			up dasioda dwjdnad adonad		(this moves you up, more restrictions?)
+			and a whole bunch of other shit  
+			
+			But is it too much freedom? 
+		'''
+		
+		PossibleMoves = ['down','south','bottom','bot','top','up','north','left','west','right','east']
+		MoveIndicate = ['move', 'run', 'walk']
+		Down = ['down','south','bottom','bot']
+		Up = ['top','up','north']
+		Left = ['left','west']
+		Right = ['right','east']
+		PossibleSearches = ['search','find','explore','examine']
+		PossibleInventories = ['inventory','backpack','items','found']
+		PossibleGet = ['get','take','steal','grab']
 		cmd = self.command.split(" ")
+<<<<<<< HEAD
 		if cmd[0] == "move":
 			if len(cmd) > 1:
 				if cmd[1] in DIRECTIONS.keys():
@@ -96,13 +146,61 @@ class Player:
 				print("Please include an item name")
 		else:
 			print("Please input valid command")
+=======
+		for i in range(0, len(cmd)):
+			s = cmd[i]
+			if s in MoveIndicate:						#if move is found first, then check next input for direction
+				if i != len(cmd)-1:						#if there is anything after move command
+					if cmd[i+1] in Up:
+						self.move(0,False)
+					elif cmd[i+1] in Right:
+						self.move(1,False)
+					elif cmd[i+1] in Down:
+						self.move(2,False)
+					elif cmd[i+1] in Left:
+						self.move(3,False)
+					else:
+						print("Please type in a valid direction to move")
+					break
+				else:
+					print("Please type in a direction to move")
+					break
+			elif s in PossibleMoves:				#if direction is indicated without move 
+				if cmd[i] in Up:
+					self.move(0,False)
+				if cmd[i] in Right:
+					self.move(1,False)
+				if cmd[i] in Down:
+					self.move(2,False)
+				if cmd[i] in Left:
+					self.move(3,False)
+				break
+			elif s in PossibleSearches:
+				self.search()
+				i = len(cmd)
+				break
+			elif s in PossibleInventories:
+				self.printInventory()
+				i = len(cmd)
+				break
+			elif s in PossibleGet:
+				self.getItem()
+				i = len(cmd)	
+				break	
+			elif i == len(cmd)-1:				#no valid commands were found
+				print("Please input valid command")
+				
+				
+			
+
+			
+>>>>>>> refs/remotes/Whatsit/master
 
 	#Picks up key from room(temporary)
-	def getItem(self, itemName):
+	def getItem(self):
 		curRoom = config.map.layout[self.location[0]][self.location[1]]
-		
-		if not curRoom.hasItemByName(itemName):
-			print("There is no item named ", itemName ," to get from this room")
+		if not curRoom.itemList:
+			print("There is no item to gotet from this room")
 		else:
 			self.inventory.append(curRoom.itemList[0])
 			curRoom.itemList.pop()
@@ -112,6 +210,7 @@ class Player:
 	def printInventory(self):
 		items = ""
 		for i in self.inventory:
+<<<<<<< HEAD
 			items += i.name + ", "
 		items = items[:-2]
 
@@ -120,6 +219,14 @@ class Player:
 		else:
 			print("The following items are in your inventory: %s" % items)
 		
+=======
+			items += i.name
+		
+		if items == "":
+			print("There are no items in your inventory")
+		else:
+			print("The follwing items are in your inventory: %s" % items)
+>>>>>>> refs/remotes/Whatsit/master
 	def move(self, dir, flag):
 		location = self.location
 		newLoc = self.location
@@ -137,7 +244,6 @@ class Player:
 				self.playerPath.sort()
 				self.playerPath = list(k for k,_ in itertools.groupby(self.playerPath))
 				print("You moved north")
-				print(self.playerPath)
 			elif check == 2 and flag == False:
 				print('The door is locked')
 			else:
@@ -201,3 +307,4 @@ class Player:
 		else:
 			print(curRoom.adjacencyList)
 		config.map.printMap()
+		
