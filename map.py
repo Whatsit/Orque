@@ -77,43 +77,48 @@ class Map:
 			midLine = ""
 			botLine = ""
 			for j in range(COLS):
-				#Top line North
-				if self.layout[i][j].adjacencyList[0] == 1:
-					topLine += " | "
-				elif self.layout[i][j].adjacencyList[0] == 2:
-					topLine += colored(" | ", "red")
-				else:
-					topLine += "   "
-				#Mid line West
-				if self.layout[i][j].adjacencyList[3] == 1:
-					midLine += "-"
-				elif self.layout[i][j].adjacencyList[3] == 2:
-					midLine += colored("-", "red")
-				else:
-					midLine += " "
-				#Mid line Room
-				if self.layout[i][j].roomType == 0:
-					if not self.layout[i][j].playerList:
-						midLine += "N"
+				if [i,j] in config.pL[0].playerPath:
+
+					#Top line North
+					if self.layout[i][j].adjacencyList[0] == 1:
+						topLine += " | "
+					elif self.layout[i][j].adjacencyList[0] == 2:
+						topLine += colored(" | ", "red")
 					else:
-						midLine += colored("N", "red")
+						topLine += "   "
+					#Mid line West
+					if self.layout[i][j].adjacencyList[3] == 1:
+						midLine += "-"
+					elif self.layout[i][j].adjacencyList[3] == 2:
+						midLine += colored("-", "red")
+					else:
+						midLine += " "
+					#Mid line Room
+					if self.layout[i][j].roomType == 0:
+						if not self.layout[i][j].playerList:
+							midLine += "N"
+						else:
+							midLine += colored("N", "red")
+					else:
+						midLine += "P"
+					#Mid line East
+					if self.layout[i][j].adjacencyList[1] == 1:
+						midLine += "-"
+					elif self.layout[i][j].adjacencyList[1] == 2:
+						midLine += colored("-", "red")
+					else:
+						midLine += " "
+					#Bot line South
+					if self.layout[i][j].adjacencyList[2] == 1:
+						botLine += " | "
+					elif self.layout[i][j].adjacencyList[2] == 2:
+						botLine += colored(" | ", "red")
+					else:
+						botLine += "   "
 				else:
-					midLine += "P"
-				#Mid line East
-				if self.layout[i][j].adjacencyList[1] == 1:
-					midLine += "-"
-				elif self.layout[i][j].adjacencyList[1] == 2:
-					midLine += colored("-", "red")
-				else:
-					midLine += " "
-				#Bot line South
-				if self.layout[i][j].adjacencyList[2] == 1:
-					botLine += " | "
-				elif self.layout[i][j].adjacencyList[2] == 2:
-					botLine += colored(" | ", "red")
-				else:
-					botLine += "   "
-				#
+					topLine += '   '
+					midLine += '   '
+					botLine += '   '
 
 			print(topLine)
 			print(midLine)
