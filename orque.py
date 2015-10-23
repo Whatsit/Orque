@@ -33,9 +33,9 @@ config.map.layout[0][1].itemList.append(key)
 config.map.printMap()
 
 #UI test
-ui = UI()
+#ui = UI()
 
-'''
+
 while True:
 	config.pL[0].command = input("Input command: ")
 	if config.pL[0].command == "exit":
@@ -44,7 +44,7 @@ while True:
 		config.pL[0].parseCommand()
 
 #Timer logic code (To be implemented later)
-
+'''
 	if timer < 1:
 		timer += 1
 		time.sleep(1)
