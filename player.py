@@ -3,7 +3,18 @@ import itertools
 from map import Map
 from room import Room
 
-DIRECTIONS = {"north" : 0, "east" : 1, "south" : 2, "west" : 3}
+DIRECTIONS = {'0' : ['top','up','north'], '1' : ['right','east'], '2' : ['down','south','bottom','bot'], '3' : ['left','west']}
+
+PossibleMoves = ['down','south','bottom','bot','top','up','north','left','west','right','east']
+MoveIndicate = ['move', 'run', 'walk']
+Down = ['down','south','bottom','bot']
+Up = ['top','up','north']
+Left = ['left','west']
+Right = ['right','east']
+PossibleSearches = ['search','find','explore','examine']
+PossibleInventories = ['inventory','backpack','items','found']
+PossibleGet = ['get','take','steal','grab']
+PossibleUse = ['use']
 
 class Player:
 	def __init__(self, id, loc):
@@ -24,7 +35,17 @@ class Player:
 	def updateCom(self, string):
 		self.command = string
 
-<<<<<<< HEAD
+	#working on better way to handle associating directional keyword with num
+	def getKeyByValue(self, value):
+		key = ""
+		print(DIRECTIONS.values())
+		for x in range(0, 4):
+			valueList = list(DIRECTIONS.values())[x]
+			if value in valueList:
+				key = list(DIRECTIONS.keys())[x]
+		print("key is", key)
+		
+	
 	def hasItemByName(self, itemName):
 		for x in range(0, len(self.inventory)):
 			item = self.inventory[x]
@@ -35,17 +56,8 @@ class Player:
 	def useItem(self, itemName, dir):
 		if not self.inventory:
 			print('Inventory is empty')
-=======
-	def useItem(self):
-		if not inventory:
-			print('No item')
->>>>>>> refs/remotes/Whatsit/master
 		else:
-			check = Room.checkDoor()
-			if check == None:
-				print('No door you idiot')
-			else:
-<<<<<<< HEAD
+			if self.hasItemByName(itemName):
 				curRoom = config.map.layout[self.location[0]][self.location[1]]
 				check = curRoom.checkDoor()
 				print(check)
@@ -53,23 +65,24 @@ class Player:
 					print('There are no locked doors')
 				else:
 					if dir == None:
-						self.move(DIRECTIONS[check[0]], True)
+						self.move(check[0], True)
 					else:
-						if dir in DIRECTIONS.keys():
-							if dir in check :
-								self.move(DIRECTIONS[dir], True)
-							else:
-								print("You hit a wall")
+						if dir in Up and 0 in check:
+							self.move(0, True)
+						elif dir in Right and 1 in check:
+							self.move(1, True)
+						elif dir in Down and 2 in check:
+							self.move(2, True)
+						elif dir in Left and 3 in check:
+							self.move(3, True)
 						else:
 							print("Invalid direction parameter")
-=======
-				move(check, True)
->>>>>>> refs/remotes/Whatsit/master
+			else:
+				print("There is no item called %s in your inventory" % itemName)
 
 	def search(self):
 		items = ""
 		for i in config.map.layout[self.location[0]][self.location[1]].itemList:
-<<<<<<< HEAD
 			items += i.name + ", "
 		items = items[:-2]
 
@@ -77,15 +90,6 @@ class Player:
 			print("There are no items in the room")
 		else:
 			print("The following items are in the room: %s" % items)
-=======
-			items += i.name
-		
-		if items == "":
-			print("There are no items in the room")
-		else:
-			print("The follwing items are in the room: %s" % items)
-			
->>>>>>> refs/remotes/Whatsit/master
 
 	def parseCommand(self):
 		#FUCKING TOTAL FREEDOM BITCH TEMPLATE 
@@ -108,45 +112,9 @@ class Player:
 			But is it too much freedom? 
 		'''
 		
-		PossibleMoves = ['down','south','bottom','bot','top','up','north','left','west','right','east']
-		MoveIndicate = ['move', 'run', 'walk']
-		Down = ['down','south','bottom','bot']
-		Up = ['top','up','north']
-		Left = ['left','west']
-		Right = ['right','east']
-		PossibleSearches = ['search','find','explore','examine']
-		PossibleInventories = ['inventory','backpack','items','found']
-		PossibleGet = ['get','take','steal','grab']
+		
 		cmd = self.command.split(" ")
-<<<<<<< HEAD
-		if cmd[0] == "move":
-			if len(cmd) > 1:
-				if cmd[1] in DIRECTIONS.keys():
-					self.move(DIRECTIONS[cmd[1]],False)
-				else:
-					print("Invalid direction parameter")
-			else:
-				print("Please include a valid direction")
-		elif cmd[0] == "search":
-			self.search()
-		elif cmd[0] == "inventory":
-			self.printInventory()
-		elif cmd[0] == "get":
-			if len(cmd) > 1:
-				self.getItem(cmd[1])
-			else:
-				print("Please include an item name")
-		elif cmd[0] == "use":
-			if len(cmd) > 1:
-				if len(cmd) > 2:
-					self.useItem(cmd[1], cmd[2])
-				else:
-					self.useItem(cmd[1], None)
-			else:
-				print("Please include an item name")
-		else:
-			print("Please input valid command")
-=======
+
 		for i in range(0, len(cmd)):
 			s = cmd[i]
 			if s in MoveIndicate:						#if move is found first, then check next input for direction
@@ -184,33 +152,36 @@ class Player:
 				i = len(cmd)
 				break
 			elif s in PossibleGet:
-				self.getItem()
+				self.getItem(cmd[i+1])
 				i = len(cmd)	
 				break	
+			elif s in PossibleUse:
+				if len(cmd) > 2:
+					self.useItem(cmd[i+1], cmd[i+2])
+				elif len(cmd) > 1:
+					self.useItem(cmd[i+1], None)
+				i = len(cmd)
+				break
 			elif i == len(cmd)-1:				#no valid commands were found
 				print("Please input valid command")
-				
-				
-			
-
-			
->>>>>>> refs/remotes/Whatsit/master
 
 	#Picks up key from room(temporary)
-	def getItem(self):
+	def getItem(self, itemName):
 		curRoom = config.map.layout[self.location[0]][self.location[1]]
 		if not curRoom.itemList:
-			print("There is no item to gotet from this room")
+			print("There is no item to get from this room")
 		else:
-			self.inventory.append(curRoom.itemList[0])
-			curRoom.itemList.pop()
-			print("You picked up an item: %s" % itemName)
-			self.printInventory()
+			if curRoom.hasItemByName(itemName):
+				self.inventory.append(curRoom.itemList[0])
+				curRoom.itemList.pop()
+				print("You picked up an item: %s" % itemName)
+				self.printInventory()
+			else:
+				print("There is no item called %s to get from this room" % itemName)
 
 	def printInventory(self):
 		items = ""
 		for i in self.inventory:
-<<<<<<< HEAD
 			items += i.name + ", "
 		items = items[:-2]
 
@@ -218,15 +189,7 @@ class Player:
 			print("There are no items in your inventory")
 		else:
 			print("The following items are in your inventory: %s" % items)
-		
-=======
-			items += i.name
-		
-		if items == "":
-			print("There are no items in your inventory")
-		else:
-			print("The follwing items are in your inventory: %s" % items)
->>>>>>> refs/remotes/Whatsit/master
+
 	def move(self, dir, flag):
 		location = self.location
 		newLoc = self.location
