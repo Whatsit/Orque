@@ -1,3 +1,4 @@
+import config
 from room import Room
 from random import randint
 from lib.termcolor import colored
@@ -15,10 +16,10 @@ class Map:
 	def addRoom(self,x,y,pRoom):
 		self.layout[x][y] = pRoom
 
-	#Randomly generated connected map with dimensions ROWSxCOLS 
+	#Randomly generated connected map with dimensions ROWSxCOLS
 	def randomConnectedMap(self):
 		print("Generating random connected map")
-		
+
 		for i in range(ROWS):
 			for j in range(COLS):
 				#Decide on room type
@@ -27,7 +28,7 @@ class Map:
 					self.addRoom(i,j,Room(1))	#Initialize puzzle room
 				else:
 					self.addRoom(i,j,Room())	#Initialize normal room
-				
+
 				#Randomly initialize room adjacencies
 				#North adjacency
 				if i == 0:
@@ -65,9 +66,10 @@ class Map:
 		#Debug
 		for i in range(ROWS):
 			for j in range(COLS):
-				print(self.layout[i][j].adjacencyList, end = "")
+				print(self.layout[i][j].adjacencyList, end = '')
 			print()
 		print()
+
 
 	def printMap(self):
 		for i in range(ROWS):
@@ -78,11 +80,15 @@ class Map:
 				#Top line North
 				if self.layout[i][j].adjacencyList[0] == 1:
 					topLine += " | "
+				elif self.layout[i][j].adjacencyList[0] == 2:
+					topLine += colored(" | ", "red")
 				else:
 					topLine += "   "
 				#Mid line West
 				if self.layout[i][j].adjacencyList[3] == 1:
 					midLine += "-"
+				elif self.layout[i][j].adjacencyList[3] == 2:
+					midLine += colored("-", "red")
 				else:
 					midLine += " "
 				#Mid line Room
@@ -96,18 +102,26 @@ class Map:
 				#Mid line East
 				if self.layout[i][j].adjacencyList[1] == 1:
 					midLine += "-"
+				elif self.layout[i][j].adjacencyList[1] == 2:
+					midLine += colored("-", "red")
 				else:
 					midLine += " "
 				#Bot line South
 				if self.layout[i][j].adjacencyList[2] == 1:
 					botLine += " | "
+				elif self.layout[i][j].adjacencyList[2] == 2:
+					botLine += colored(" | ", "red")
 				else:
 					botLine += "   "
+				#
+
 			print(topLine)
 			print(midLine)
 			print(botLine)
+			#print(config.pL[0].playerPath)
 
-	#Simple ROWSxCOLS map with a puzzle room in the middle	
+'''
+	#Simple ROWSxCOLS map with a puzzle room in the middle
 	def simpleSquareMap(self):
 		print(self.layout)
 		for i in range(ROWS):
@@ -138,3 +152,7 @@ class Map:
 		self.layout[2][1].adjacencyList[3] = 2
 		self.layout[1][2].adjacencyList[0] = 2
 		self.layout[0][1].adjacencyList[1] = 2
+<<<<<<< Updated upstream
+=======
+'''
+#>>>>>>> Stashed changes
