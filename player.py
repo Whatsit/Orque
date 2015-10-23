@@ -3,6 +3,8 @@ import itertools
 from map import Map
 from room import Room
 
+DIRECTIONS = {"north" : 0, "east" : 1, "south" : 2, "west" : 3}
+
 class Player:
 	def __init__(self, id, loc):
 		self.playerId = id
@@ -30,7 +32,7 @@ class Player:
 				return True
 		return False
 		
-	def useItem(self, itemName):
+	def useItem(self, itemName, dir):
 		if not self.inventory:
 			print('Inventory is empty')
 		else:
@@ -39,35 +41,40 @@ class Player:
 			else:
 				curRoom = config.map.layout[self.location[0]][self.location[1]]
 				check = curRoom.checkDoor()
-				if check == None:
-					print('No door you idiot')
+				print(check)
+				if not check:
+					print('There are no locked doors')
 				else:
-					move(check, True)
+					if dir == None:
+						self.move(DIRECTIONS[check[0]], True)
+					else:
+						if dir in DIRECTIONS.keys():
+							if dir in check :
+								self.move(DIRECTIONS[dir], True)
+							else:
+								print("You hit a wall")
+						else:
+							print("Invalid direction parameter")
 
 	def search(self):
 		items = ""
 		for i in config.map.layout[self.location[0]][self.location[1]].itemList:
-			items += i.name
+			items += i.name + ", "
+		items = items[:-2]
 
 		if items == "":
 			print("There are no items in the room")
 		else:
-			print("The follwing items are in the room: %s" % items)
+			print("The following items are in the room: %s" % items)
 
 	def parseCommand(self):
 		cmd = self.command.split(" ")
 		if cmd[0] == "move":
 			if len(cmd) > 1:
-				if cmd[1] == "north":
-					self.move(0,False)
-				elif cmd[1] == "east":
-					self.move(1,False)
-				elif cmd[1] == "south":
-					self.move(2,False)
-				elif cmd[1] == "west":
-					self.move(3,False)
+				if cmd[1] in DIRECTIONS.keys():
+					self.move(DIRECTIONS[cmd[1]],False)
 				else:
-					print("Please input valid direction")
+					print("Invalid direction parameter")
 			else:
 				print("Please include a valid direction")
 		elif cmd[0] == "search":
@@ -81,7 +88,10 @@ class Player:
 				print("Please include an item name")
 		elif cmd[0] == "use":
 			if len(cmd) > 1:
-				self.useItem(cmd[1])
+				if len(cmd) > 2:
+					self.useItem(cmd[1], cmd[2])
+				else:
+					self.useItem(cmd[1], None)
 			else:
 				print("Please include an item name")
 		else:
@@ -96,19 +106,20 @@ class Player:
 		else:
 			self.inventory.append(curRoom.itemList[0])
 			curRoom.itemList.pop()
-			print("You got some items")
+			print("You picked up an item: %s" % itemName)
 			self.printInventory()
 
 	def printInventory(self):
 		items = ""
 		for i in self.inventory:
-			items += i.name
+			items += i.name + ", "
+		items = items[:-2]
 
 		if items == "":
 			print("There are no items in your inventory")
 		else:
-			print("The follwing items are in your inventory: %s" % items)
-
+			print("The following items are in your inventory: %s" % items)
+		
 	def move(self, dir, flag):
 		location = self.location
 		newLoc = self.location
