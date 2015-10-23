@@ -10,6 +10,7 @@ class Player:
 		self.inventory = []
 		self.location = loc
 		self.command = ""
+		self.playerPath = [loc]
 
 	def addItem(self, item):
 		self.inventory.append(item)
@@ -153,6 +154,9 @@ class Player:
 				newRoom = config.map.layout[newLoc[0]][newLoc[1]]
 				newRoom.playerList.append(self)
 				self.location = newLoc
+				self.playerPath.append(newLoc)
+				self.playerPath.sort()
+				self.playerPath = list(k for k,_ in itertools.groupby(self.playerPath))
 				print("You moved north")
 			elif check == 2 and flag == False:
 				print('The door is locked')
@@ -167,6 +171,9 @@ class Player:
 				newRoom = config.map.layout[newLoc[0]][newLoc[1]]
 				newRoom.playerList.append(self)
 				self.location = newLoc
+				self.playerPath.append(newLoc)
+				self.playerPath.sort()
+				self.playerPath = list(k for k,_ in itertools.groupby(self.playerPath))
 				print("You moved east")
 			elif check == 2 and flag == False:
 				print('The door is locked')
@@ -181,6 +188,9 @@ class Player:
 				newRoom = config.map.layout[newLoc[0]][newLoc[1]]
 				newRoom.playerList.append(self)
 				self.location = newLoc
+				self.playerPath.append(newLoc)
+				self.playerPath.sort()
+				self.playerPath = list(k for k,_ in itertools.groupby(self.playerPath))
 				print("You moved south")
 			elif check == 2 and flag == False:
 				print('The door is locked')
@@ -195,6 +205,9 @@ class Player:
 				newRoom = config.map.layout[newLoc[0]][newLoc[1]]
 				newRoom.playerList.append(self)
 				self.location = newLoc
+				self.playerPath.append(newLoc)
+				self.playerPath.sort()
+				self.playerPath = list(k for k,_ in itertools.groupby(self.playerPath))
 				print("You moved west")
 			elif check == 2 and flag == False:
 				print('The door is locked')
