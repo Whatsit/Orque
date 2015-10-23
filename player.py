@@ -1,4 +1,5 @@
 import config
+import itertools
 from map import Map
 from room import Room
 
