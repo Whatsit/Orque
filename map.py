@@ -100,7 +100,10 @@ class Map:
 						else:
 							midLine += colored("N", "red")
 					else:
-						midLine += "P"
+						if not self.layout[i][j].playerList:
+							midLine += "P"
+						else:
+							midLine += colored("P", "blue")
 					#Mid line East
 					if self.layout[i][j].adjacencyList[1] == 1:
 						midLine += "-"
@@ -115,6 +118,7 @@ class Map:
 						botLine += colored(" | ", "red")
 					else:
 						botLine += "   "
+				# if player has not visited location leave it blank
 				else:
 					topLine += '   '
 					midLine += '   '
@@ -123,41 +127,3 @@ class Map:
 			print(topLine)
 			print(midLine)
 			print(botLine)
-			#print(config.pL[0].playerPath)
-
-'''
-	#Simple ROWSxCOLS map with a puzzle room in the middle
-	def simpleSquareMap(self):
-		print(self.layout)
-		for i in range(ROWS):
-			for j in range(COLS):
-				#print(i,j)
-				self.addRoom(i,j,Room())
-				if j == 0:
-					self.layout[i][j].adjacencyList[0] = 0
-					#print("No North")
-				if i == COLS-1:
-					self.layout[i][j].adjacencyList[1] = 0
-					#print("No East")
-				if j == ROWS-1:
-					self.layout[i][j].adjacencyList[2] = 0
-					#print("No South")
-				if i == 0:
-					self.layout[i][j].adjacencyList[3] = 0
-					#print("No West")
-				#print(self.layout[i][j].adjacencyList)
-		#Set puzzle room at [1,1]
-		self.layout[1][1].roomType = 1
-		self.layout[1][1].adjacencyList[0] = 2
-		self.layout[1][1].adjacencyList[1] = 2
-		self.layout[1][1].adjacencyList[2] = 2
-		self.layout[1][1].adjacencyList[3] = 2
-		#Other room connections
-		self.layout[1][0].adjacencyList[2] = 2
-		self.layout[2][1].adjacencyList[3] = 2
-		self.layout[1][2].adjacencyList[0] = 2
-		self.layout[0][1].adjacencyList[1] = 2
-<<<<<<< Updated upstream
-=======
-'''
-#>>>>>>> Stashed changes
