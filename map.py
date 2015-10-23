@@ -21,27 +21,42 @@ class Map:
 		
 		for i in range(ROWS):
 			for j in range(COLS):
-				#Initialize room
-				self.addRoom(i,j,Room())
+				#Decide on room type
+				x = randint(1,100)
+				if x >= 90:
+					self.addRoom(i,j,Room(1))	#Initialize puzzle room
+				else:
+					self.addRoom(i,j,Room())	#Initialize normal room
+				
 				#Randomly initialize room adjacencies
 				#North adjacency
 				if i == 0:
 					self.layout[i][j].adjacencyList[0] = 0
+				elif self.layout[i][j].roomType == 1:
+					self.layout[i][j].adjacencyList[0] = 2
+					self.layout[i-1][j].adjacencyList[2] = 2
 				else:
 					self.layout[i][j].adjacencyList[0] = self.layout[i-1][j].adjacencyList[2]
 				#East adjacency
 				if j == COLS-1:
 					self.layout[i][j].adjacencyList[1] = 0
+				elif self.layout[i][j].roomType == 1:
+					self.layout[i][j].adjacencyList[1] = 2
 				else:
 					self.layout[i][j].adjacencyList[1] = randint(0,1)
 				#South adjacency
 				if i == ROWS-1:
 					self.layout[i][j].adjacencyList[2] = 0
+				elif self.layout[i][j].roomType == 1:
+					self.layout[i][j].adjacencyList[2] = 2
 				else:
 					self.layout[i][j].adjacencyList[2] = randint(0,1)
 				#West adjacency
 				if j == 0:
 					self.layout[i][j].adjacencyList[3] = 0
+				elif self.layout[i][j].roomType == 1:
+					self.layout[i][j].adjacencyList[3] = 2
+					self.layout[i][j-1].adjacencyList[1] = 2
 				else:
 					self.layout[i][j].adjacencyList[3] = self.layout[i][j-1].adjacencyList[1]
 				#atleast 1 corridor
