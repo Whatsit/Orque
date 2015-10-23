@@ -1,4 +1,4 @@
-form random import randint
+from random import randint
 
 # returns the winner of the fight
 def attack(self, p1, p2):
