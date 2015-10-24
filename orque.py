@@ -41,7 +41,7 @@ while True:
 	if config.pL[0].command == "exit":
 		break
 	else:
-		config.pL[0].parseCommand()
+		print(config.pL[0].parseCommand())
 
 #Timer logic code (To be implemented later)
 '''
