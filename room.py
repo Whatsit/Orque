@@ -18,6 +18,7 @@ value in list corresponds to connector type
 from item import Item
 
 class Room:
+
 	def __init__(self, type = 0):
 		self.roomType = type
 		self.itemList = []
@@ -31,11 +32,11 @@ class Room:
 			print("This is a normal room")
 	
 	def checkDoor(self):
-		for x in self.adjacencyList:
-			if x is 2:	# if we find a locked door, return direction of door.
-				return self.adjacencyList.index(x)
-			else:
-				return None
+		result = []
+		for x in range(0, 4):
+			if self.adjacencyList[x] == 2:	# if we find a locked door, return direction of door.				
+				result.append(x)
+		return result
 	def hasItemByName(self, itemName):
 		for x in range(0, len(self.itemList)):
 			item = self.itemList[x]
