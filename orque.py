@@ -30,7 +30,7 @@ config.map.layout[0][1].itemList.append(key)
 #print(config.map.layout[1][0].itemList[0].name)
 
 #Initial map
-config.map.printMap()
+config.map.printMap(1)
 
 #UI test
 #ui = UI()
