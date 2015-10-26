@@ -77,8 +77,8 @@ class Map:
 			midLine = ""
 			botLine = ""
 			for j in range(COLS):
+				# Check if player has visited location yet
 				if [i,j] in config.pL[0].playerPath:
-
 					#Top line North
 					if self.layout[i][j].adjacencyList[0] == 1:
 						topLine += " | "
@@ -123,7 +123,6 @@ class Map:
 					topLine += '   '
 					midLine += '   '
 					botLine += '   '
-
 			print(topLine)
 			print(midLine)
 			print(botLine)

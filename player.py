@@ -44,15 +44,15 @@ class Player:
 			if value in valueList:
 				key = list(DIRECTIONS.keys())[x]
 		print("key is", key)
-		
-	
+
+
 	def hasItemByName(self, itemName):
 		for x in range(0, len(self.inventory)):
 			item = self.inventory[x]
 			if item.name == itemName:
 				return True
 		return False
-		
+
 	def useItem(self, itemName, dir):
 		if not self.inventory:
 			return 'Inventory is empty'
@@ -92,8 +92,8 @@ class Player:
 			return "The following items are in the room: %s" % items
 
 	def parseCommand(self):
-		#FUCKING TOTAL FREEDOM BITCH TEMPLATE 
-		
+		#FUCKING TOTAL FREEDOM BITCH TEMPLATE
+
 		'''
 		Example inputss:
 			I want to move right
@@ -107,12 +107,12 @@ class Player:
 			backpack						( display inventory)
 			down search move left 			(this input moves you down, more restrictions?)
 			up dasioda dwjdnad adonad		(this moves you up, more restrictions?)
-			and a whole bunch of other shit  
-			
-			But is it too much freedom? 
+			and a whole bunch of other shit
+
+			But is it too much freedom?
 		'''
-		
-		
+
+
 		cmd = self.command.split(" ")
 
 		for i in range(0, len(cmd)):
@@ -133,7 +133,7 @@ class Player:
 				else:
 					return "Please type in a direction to move"
 					break
-			elif s in PossibleMoves:				#if direction is indicated without move 
+			elif s in PossibleMoves:				#if direction is indicated without move
 				if cmd[i] in Up:
 					return self.move(0,False)
 				if cmd[i] in Right:
@@ -153,8 +153,8 @@ class Player:
 				break
 			elif s in PossibleGet:
 				return self.getItem(cmd[i+1])
-				i = len(cmd)	
-				break	
+				i = len(cmd)
+				break
 			elif s in PossibleUse:
 				if len(cmd) > 2:
 					return self.useItem(cmd[i+1], cmd[i+2])
@@ -204,6 +204,7 @@ class Player:
 				newRoom = config.map.layout[newLoc[0]][newLoc[1]]
 				newRoom.playerList.append(self)
 				self.location = newLoc
+				# Append to playerPath and insure no duplicates
 				self.playerPath.append(newLoc)
 				self.playerPath.sort()
 				self.playerPath = list(k for k,_ in itertools.groupby(self.playerPath))
@@ -221,6 +222,7 @@ class Player:
 				newRoom = config.map.layout[newLoc[0]][newLoc[1]]
 				newRoom.playerList.append(self)
 				self.location = newLoc
+				# Append to playerPath and insure no duplicates
 				self.playerPath.append(newLoc)
 				self.playerPath.sort()
 				self.playerPath = list(k for k,_ in itertools.groupby(self.playerPath))
@@ -238,6 +240,7 @@ class Player:
 				newRoom = config.map.layout[newLoc[0]][newLoc[1]]
 				newRoom.playerList.append(self)
 				self.location = newLoc
+				# Append to playerPath and insure no duplicates
 				self.playerPath.append(newLoc)
 				self.playerPath.sort()
 				self.playerPath = list(k for k,_ in itertools.groupby(self.playerPath))
@@ -255,6 +258,7 @@ class Player:
 				newRoom = config.map.layout[newLoc[0]][newLoc[1]]
 				newRoom.playerList.append(self)
 				self.location = newLoc
+				# Append to playerPath and insure no duplicates
 				self.playerPath.append(newLoc)
 				self.playerPath.sort()
 				self.playerPath = list(k for k,_ in itertools.groupby(self.playerPath))
