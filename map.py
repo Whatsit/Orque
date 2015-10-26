@@ -5,8 +5,8 @@ from lib.termcolor import colored
 from lib.colorama import init
 init()
 
-ROWS = 5
-COLS = 10
+ROWS = config.ROWS
+COLS = config.COLS
 
 class Map:
 	def __init__(self):
@@ -95,13 +95,13 @@ class Map:
 		return tmpPuzzleRoomCoord
 
 
-	def printMap(self,type=0):
+	def printMap(self,id,type=0):
 		for i in range(ROWS):
 			topLine = ""
 			midLine = ""
 			botLine = ""
 			for j in range(COLS):
-				if [i,j] in config.pL[0].playerPath or type == 1:
+				if [i,j] in config.pL[id].playerPath or type == 1:
 					#Top line North
 					if self.layout[i][j].adjacencyList[0] == 1:
 						topLine += " | "
