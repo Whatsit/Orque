@@ -8,6 +8,8 @@ IMPORTANT NOTE:
 
 import time
 import config
+import sys
+import os
 from player import Player
 from room import Room
 from map import Map
@@ -16,13 +18,16 @@ from ui import UI
 
 timer = 0
 
+
 #Initialize map and rooms
 config.map = Map()
 config.map.randomConnectedMap()
 
 #Initialize and spawn players
-config.pL = [Player(1,[0,0])]
-config.map.layout[0][0].playerList.append(config.pL[0])
+for p in range(0,2):
+	tmpPlayer = Player(p)
+	config.pL.append(tmpPlayer)
+#config.map.layout[0][0].playerList.append(config.pL[0])
 
 #Spawn key
 key = Item(1,"key")
@@ -30,18 +35,23 @@ config.map.layout[0][1].itemList.append(key)
 #print(config.map.layout[1][0].itemList[0].name)
 
 #Initial map
-config.map.printMap()
+config.map.printMap(0,1)
 
 #UI test
 #ui = UI()
 
 
 while True:
-	config.pL[0].command = input("Input command: ")
-	if config.pL[0].command == "exit":
-		break
-	else:
-		print(config.pL[0].parseCommand())
+	for p in range(len(config.pL)):
+		print("Player ", p)
+		config.map.printMap(config.pL[p].playerId)
+		config.pL[p].command = input("Input command: ")
+		if config.pL[p].command == "exit":
+			sys.exit()
+		else:
+			print(config.pL[p].parseCommand())
+		config.pL[p].command = input("Press enter to continue: ")
+		os.system('cls' if os.name == 'nt' else 'clear')
 
 #Timer logic code (To be implemented later)
 '''
