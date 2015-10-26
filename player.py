@@ -2,6 +2,7 @@ import config
 import itertools
 from map import Map
 from room import Room
+from random import randint
 
 DIRECTIONS = {'0' : ['top','up','north'], '1' : ['right','east'], '2' : ['down','south','bottom','bot'], '3' : ['left','west']}
 
@@ -17,14 +18,15 @@ PossibleGet = ['get','take','steal','grab']
 PossibleUse = ['use']
 
 class Player:
-	def __init__(self, id, loc):
+	def __init__(self, id):
 		self.playerId = id
 		self.name = "Default"
 		self.health = 1
 		self.inventory = []
-		self.location = loc
+		self.location = randomCoord()
 		self.command = ""
-		self.playerPath = [loc]
+		self.playerPath = [self.location]
+		config.map.layout[self.location[0]][self.location[1]].playerList.append(self)
 
 	def addItem(self, item):
 		self.inventory.append(item)
@@ -196,6 +198,7 @@ class Player:
 		newLoc = self.location
 		curRoom = config.map.layout[location[0]][location[1]]
 		print(curRoom.adjacencyList)
+		config.map.printMap(self.playerId)
 		if dir == 0:	#north
 			check = curRoom.adjacencyList[0]
 			if check == 1 or flag == True:
@@ -274,5 +277,8 @@ class Player:
 			print(newRoom.adjacencyList)
 		else:
 			print(curRoom.adjacencyList)
-		config.map.printMap()
+		config.map.printMap(self.playerId)
 		return output
+
+def randomCoord():
+	return [randint(0,config.ROWS-1), randint(0,config.COLS-1)]
