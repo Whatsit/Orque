@@ -9,6 +9,7 @@ IMPORTANT NOTE:
 import time
 import config
 import sys
+import os
 from player import Player
 from room import Room
 from map import Map
@@ -50,6 +51,7 @@ while True:
 		else:
 			print(config.pL[p].parseCommand())
 		config.pL[p].command = input("Press enter to continue: ")
+		os.system('cls' if os.name == 'nt' else 'clear')
 
 #Timer logic code (To be implemented later)
 '''
