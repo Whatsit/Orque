@@ -1,13 +1,18 @@
+""" UI Module
+
+Handles UI for Orque
+"""
 from tkinter import *
 from player import Player
 import config
 
-
 class UI:
-	"""UI class
-	"""
+	"""UI class"""
 	def __init__(self):
-
+		""" Default Constructor 
+		
+		Initializes buttons and UI frame
+		"""
 		root = Tk()
 		#root.resizable(width=FALSE, height=FALSE)
 		#root.geometry('{}x{}'.format(200, 100))
@@ -31,9 +36,10 @@ class UI:
 
 		root.mainloop()
 		root.destroy()
-
+	
 	def setCommand(self):
-		"""setCommand() Peramiters: None
+		""" setCommand 
+		
 		sets command of player = to what user types in ui form.
 		"""
 		config.pL[0].command = self.form.get()
