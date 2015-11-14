@@ -1,0 +1,10 @@
+This file contains information about building and installing
+the python code of Orque.
+
+1. Install python
+   a) Go to www.python.org/downloads
+   b) Download the python 3.5.0
+   c) Run the default installation
+2. Download the sorce code of Orque from the github
+3. Open a command window in the Orque folder
+4. Input 'python orque.py' to run Orque
