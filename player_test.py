@@ -3,10 +3,17 @@ import config
 from player import Player
 from map import Map
 from room import Room
+from item import Item
 
 class PlayerTestCase(unittest.TestCase):
 	def assert_location_equal(self, p, location):
 		self.assertEqual(p.location, location)
+
+	def assert_search_string_equal(self, p, string):
+		self.assertEqual(p.search(), string)
+
+	def assert_get_item_string_equal(self, p, string):
+		self.assertEqual(p.getItem('key'), string)
 
 class PlayerTest(PlayerTestCase):
 	def test_move_into_wall(self):
@@ -43,24 +50,55 @@ class PlayerTest(PlayerTestCase):
 		p.move(2,False)
 		self.assert_location_equal(p, [1,0])
 
-	def search_empty_room(self):
+	def test_search_empty_room(self):
+		config.map = Map()
+		config.map.randomConnectedMap()
+		p = Player(0)
+		p.location = [0,0]
+		config.pL.append(p)
+		self.assert_search_string_equal(p, "There are no items in the room")
+
+	def test_search_room_with_item(self):
+		config.map = Map()
+		config.map.randomConnectedMap()
+		p = Player(0)
+		p.location = [0,0]
+		config.pL.append(p)
+		key = Item(1,"key")
+		config.map.layout[config.pL[0].location[0]][config.pL[0].location[1]].itemList.append(key)
+		self.assert_search_string_equal(p, "The following items are in the room: key")
+
+	def test_get_item_from_empty_room(self):
+		config.map = Map()
+		config.map.randomConnectedMap()
+		p = Player(0)
+		p.location = [0,0]
+		config.pL.append(p)
+		self.assert_get_item_string_equal(p, "There is no item to get from this room")
+
+	def test_get_item_from_room_with_item(self):
+		config.map = Map()
+		config.map.randomConnectedMap()
+		p = Player(0)
+		p.location = [0,0]
+		config.pL.append(p)
+		key = Item(1,"key")
+		config.map.layout[config.pL[0].location[0]][config.pL[0].location[1]].itemList.append(key)
+		self.assert_get_item_string_equal(p, "You picked up an item: key")
+
+	def test_get_wrong_item_from_room_with_item(self):
+		config.map = Map()
+		config.map.randomConnectedMap()
+		p = Player(0)
+		p.location = [0,0]
+		config.pL.append(p)
+		key = Item(1,"poop")
+		config.map.layout[config.pL[0].location[0]][config.pL[0].location[1]].itemList.append(key)
+		self.assert_get_item_string_equal(p, "There is no item called key to get from this room")
+
+	def test_use_item_on_door(self):
 		pass
 
-	def search_room_with_item(self):
-		pass
-
-	def get_item_from_empty_room(self):
-		pass
-
-	def get_item_from_room_with_item(self):
-		pass
-
-	def use_item_with_empty_inventory(self):
-		pass
-
-	def use_item_on_door(self):
-		pass
-
-	def use_item_on_door_without_item(self):
+	def test_use_item_on_door_without_item(self):
 		pass
 
