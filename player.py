@@ -1,7 +1,5 @@
+"""Player class
 """
-Player class
-"""
-
 import config
 import itertools
 from map import Map
@@ -143,8 +141,10 @@ class Player:
 
 		for i in range(0, len(cmd)):
 			s = cmd[i]
-			if s in MoveIndicate:						#if move is found first, then check next input for direction
-				if i != len(cmd)-1:						#if there is anything after move command
+			"""if move is found first, then check next input for direction"""
+			if s in MoveIndicate:
+				"""if there is anything after move command"""
+				if i != len(cmd)-1:
 					if cmd[i+1] in Up:
 						return self.move(0,False)
 					elif cmd[i+1] in Right:
@@ -159,7 +159,8 @@ class Player:
 				else:
 					return "Please type in a direction to move"
 					break
-			elif s in PossibleMoves:				#if direction is indicated without move
+			"""if direction is indicated without move"""
+			elif s in PossibleMoves:
 				if cmd[i] in Up:
 					return self.move(0,False)
 				if cmd[i] in Right:
@@ -188,7 +189,8 @@ class Player:
 					return self.useItem(cmd[i+1], None)
 				i = len(cmd)
 				break
-			elif i == len(cmd)-1:				#no valid commands were found
+			"""no valid commands were found"""
+			elif i == len(cmd)-1:
 				return "Please input valid command"
 
 	"""getItem() Picks up key from room(temporary)"""
@@ -229,7 +231,8 @@ class Player:
 		curRoom = config.map.layout[location[0]][location[1]]
 		print(curRoom.adjacencyList)
 		config.map.printMap(self.playerId)
-		if dir == 0:	#north
+		"""move north"""
+		if dir == 0:
 			check = curRoom.adjacencyList[0]
 			if check == 1 or flag == True:
 				newLoc = [location[0]-1, location[1]]
@@ -237,7 +240,7 @@ class Player:
 				newRoom = config.map.layout[newLoc[0]][newLoc[1]]
 				newRoom.playerList.append(self)
 				self.location = newLoc
-				# Append to playerPath and insure no duplicates
+				"""Append to playerPath and insure no duplicates"""
 				self.playerPath.append(newLoc)
 				self.playerPath.sort()
 				self.playerPath = list(k for k,_ in itertools.groupby(self.playerPath))
@@ -247,7 +250,8 @@ class Player:
 			else:
 				output = 'You hit a wall...'
 			print(self.location)
-		elif dir == 1:	#east
+		"""move east"""
+		elif dir == 1:
 			check = curRoom.adjacencyList[1]
 			if check == 1 or flag == True:
 				newLoc = [location[0], location[1]+1]
@@ -255,7 +259,7 @@ class Player:
 				newRoom = config.map.layout[newLoc[0]][newLoc[1]]
 				newRoom.playerList.append(self)
 				self.location = newLoc
-				# Append to playerPath and insure no duplicates
+				"""Append to playerPath and insure no duplicates"""
 				self.playerPath.append(newLoc)
 				self.playerPath.sort()
 				self.playerPath = list(k for k,_ in itertools.groupby(self.playerPath))
@@ -265,7 +269,8 @@ class Player:
 			else:
 				output = 'You hit a wall...'
 			print(self.location)
-		elif dir == 2:	#south
+		"""move south"""
+		elif dir == 2:
 			check = curRoom.adjacencyList[2]
 			if check == 1 or flag == True:
 				newLoc = [location[0]+1, location[1]]
@@ -273,7 +278,7 @@ class Player:
 				newRoom = config.map.layout[newLoc[0]][newLoc[1]]
 				newRoom.playerList.append(self)
 				self.location = newLoc
-				# Append to playerPath and insure no duplicates
+				"""Append to playerPath and insure no duplicates"""
 				self.playerPath.append(newLoc)
 				self.playerPath.sort()
 				self.playerPath = list(k for k,_ in itertools.groupby(self.playerPath))
@@ -283,7 +288,8 @@ class Player:
 			else:
 				output = 'You hit a wall...'
 			print(self.location)
-		elif dir == 3:	#west
+		"""move west"""
+		elif dir == 3:
 			check = curRoom.adjacencyList[3]
 			if check == 1 or flag == True:
 				newLoc = [location[0], location[1]-1]
@@ -291,7 +297,7 @@ class Player:
 				newRoom = config.map.layout[newLoc[0]][newLoc[1]]
 				newRoom.playerList.append(self)
 				self.location = newLoc
-				# Append to playerPath and insure no duplicates
+				"""Append to playerPath and insure no duplicates"""
 				self.playerPath.append(newLoc)
 				self.playerPath.sort()
 				self.playerPath = list(k for k,_ in itertools.groupby(self.playerPath))
