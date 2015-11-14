@@ -164,11 +164,11 @@ class Map:
 						return
 		print("GenRanMap satisfied constraint")
 
-
-def manhattanDist(p1,p2):
-	dist = abs(p2[0] - p1[0]) + abs(p2[1] - p1[1])
-	#print(dist)
-	return dist
+	@static
+	def manhattanDist(p1,p2):
+		dist = abs(p2[0] - p1[0]) + abs(p2[1] - p1[1])
+		#print(dist)
+		return dist
 
 
 if __name__ == "__main__":
