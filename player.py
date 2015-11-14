@@ -234,13 +234,9 @@ class Player:
 		newLoc = self.location
 		curRoom = config.map.layout[location[0]][location[1]]
 		print(curRoom.adjacencyList)
-<<<<<<< HEAD
-		if dir == 0:	#north
-=======
 		config.map.printMap(self.playerId)
 		"""move north"""
 		if dir == 0:
->>>>>>> refs/remotes/Whatsit/master
 			check = curRoom.adjacencyList[0]
 			if check == 1 or flag == True:
 				newLoc = [location[0]-1, location[1]]

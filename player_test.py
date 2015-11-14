@@ -1,12 +1,13 @@
 import unittest
 from player import Player
+from map import Map
 
 class Player_Test(unitcase.TestCase):
 	def test_move_into_wall(self):
 		p = Player()
 		p.location = [0,0]
 		p.move(0,False)
-		assert(p.location == [0,0])
+		self.assertEqual(p.location == [0,0])
 
 	def test_move_into_door(self):
 		pass
