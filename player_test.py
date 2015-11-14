@@ -97,8 +97,32 @@ class PlayerTest(PlayerTestCase):
 		self.assert_get_item_string_equal(p, "There is no item called key to get from this room")
 
 	def test_use_item_on_door(self):
-		pass
+		config.map = Map()
+		config.map.randomConnectedMap()
+		config.map.layout[0][0].adjacencyList = [0,0,2,0]
+		config.map.addRoom(1,0,Room())
+		config.map.layout[1][0].adjacencyList = [2,0,0,0]
+		p = Player(0)
+		p.location = [0,0]
+		config.map.layout[0][0].playerList.append(p)
+		config.pL.append(p)
+		key = Item(1,"key")
+		p.inventory.append(key)
+		p.useItem("key",2)
+		p.move(2,True)
+		self.assert_location_equal(p, [1,0])
 
 	def test_use_item_on_door_without_item(self):
-		pass
+		config.map = Map()
+		config.map.randomConnectedMap()
+		config.map.layout[0][0].adjacencyList = [0,0,2,0]
+		config.map.addRoom(1,0,Room())
+		config.map.layout[1][0].adjacencyList = [2,0,0,0]
+		p = Player(0)
+		p.location = [0,0]
+		config.map.layout[0][0].playerList.append(p)
+		config.pL.append(p)
+		p.useItem("key",2)
+		p.move(2,False)
+		self.assert_location_equal(p, [0,0])
 
