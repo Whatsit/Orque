@@ -325,7 +325,7 @@ class Player:
 			print(newRoom.adjacencyList)
 		else:
 			print(curRoom.adjacencyList)
-		config.map.printMap(self.playerId)
+		#config.map.printMap(self.playerId)
 		return output
 
 def randomCoord():

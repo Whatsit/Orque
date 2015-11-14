@@ -9,14 +9,14 @@ class PlayerTestCase(unittest.TestCase):
 		self.assertEqual(p.location, location)
 
 class PlayerTest(PlayerTestCase):
-	'''def test_move_into_wall(self):
+	def test_move_into_wall(self):
 		config.map = Map()
 		config.map.randomConnectedMap()
 		p = Player(0)
 		p.location = [0,0]
 		config.pL.append(p)
 		p.move(0,False)
-		self.assert_location_equal(p, [0,0])'''
+		self.assert_location_equal(p, [0,0])
 
 	def test_move_into_door(self):
 		config.map = Map()
@@ -31,7 +31,17 @@ class PlayerTest(PlayerTestCase):
 		self.assert_location_equal(p, [0,0])
 
 	def test_move_into_room(self):
-		pass
+		config.map = Map()
+		config.map.randomConnectedMap()
+		config.map.layout[0][0].adjacencyList = [0,0,1,0]
+		config.map.addRoom(1,0,Room())
+		config.map.layout[1][0].adjacencyList = [1,0,0,0]
+		p = Player(0)
+		p.location = [0,0]
+		config.map.layout[0][0].playerList.append(p)
+		config.pL.append(p)
+		p.move(2,False)
+		self.assert_location_equal(p, [1,0])
 
 	def search_empty_room(self):
 		pass
