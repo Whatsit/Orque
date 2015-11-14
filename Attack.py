@@ -1,6 +1,11 @@
+"""Attack"""
 from random import randint
 
-# returns the winner of the fight
+"""attack() Peramiters: p1, p2
+p1 = player1
+p2 = player2
+rolls random int [0,1] and returns winning player
+"""
 def attack(self, p1, p2):
     var = randint(0,1)
     if var == 0:
