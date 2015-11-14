@@ -1,5 +1,6 @@
-#Global variable module
-
+"""config
+Contains global variables for orque.
+"""
 map = None
 pL = []
 ROWS = 5
