@@ -1,4 +1,8 @@
-"""Player class
+"""Player Module
+
+Handles player movements and possible actions.
+Parses player input and exectues action.
+Possible actions are: move, search, get, use, and check inventory.
 """
 import config
 import itertools
@@ -23,8 +27,21 @@ PossibleUse = ['use']
 
 class Player:
 	"""Player class
+	
+	Attributes:
+	playerID (int) - id
+	name (string) - player name. defaults to "default"
+	health (int) - health. defaults to 1
+	inventory (list [item]) - player inventory
+	command (string) - requested action/command
+	playerPath (list) - list of player locations visited
 	"""
 	def __init__(self, id):
+		""" Default Constructor
+		
+		Parameters: 
+		id (int) - player id
+		"""
 		self.playerId = id
 		self.name = "Default"
 		self.health = 1
@@ -35,27 +52,38 @@ class Player:
 		config.map.layout[self.location[0]][self.location[1]].playerList.append(self)
 
 	def addItem(self, item):
-		"""addItem() Peramiters: item
-		adds item to player inventroy list.
+		"""addItem() 
+		adds item to player inventory list.
+		
+		Parameters: 
+		item (item) - item to add
 		"""
 		self.inventory.append(item)
 
 	def removeItem(self, item):
-		"""removeItem() Peramiters: item
+		""" removeItem() 
+		
 		removes item to inventory list
+		
+		Peramiters:
+		
+		item (item) - item to remove
 		"""
 		self.inventory.remove(item)
 
 	def updateCom(self, string):
-		"""updateItem() Peramiters: string
+		""" updateItem() 
+		
 		sets player command as string.
+		
+		Parameters:
+		string (string) - command
 		"""
 		self.command = string
 
-
+	#working on better way to handle associating directional keyword with num
 	def getKeyByValue(self, value):
-		"""working on better way to handle associating directional keyword with num
-		"""
+		""" getKeyByValue """
 		key = ""
 		print(DIRECTIONS.values())
 		for x in range(0, 4):
@@ -65,19 +93,28 @@ class Player:
 		print("key is", key)
 
 	def hasItemByName(self, itemName):
-		"""hasItemByName() Peramiters: itemName
+		""" hasItemByName()
+		
 		returns true or false if player has itemName in inventory.
+		
+		Parameters:
+		itemName (string) - item name to search
 		"""
 		for x in range(0, len(self.inventory)):
 			item = self.inventory[x]
 			if item.name == itemName:
 				return True
 		return False
-
+	
 	def useItem(self, itemName, dir):
-		"""useItem() Peramiters: itemName, dir
-		determins if player can use item on door
-		then if so moves player through door.
+		""" useItem() 
+		
+		determines if player can use item on door
+		if so moves player through door.
+		
+		Parameters:
+		itemName (string) - item to use
+		dir (int) - direction to move
 		"""
 		if not self.inventory:
 			return 'Inventory is empty'
@@ -103,10 +140,11 @@ class Player:
 						else:
 							return "Invalid direction parameter"
 			else:
-				return "There is no item called %s in your inventory" % itemName
-
+				return "There is no item called %s in your inventory" % itemName 
+	
 	def search(self):
-		"""search() Peramiters: None
+		""" search()
+		
 		seaches current room for items that can be picked up.
 		"""
 		items = ""
@@ -120,12 +158,11 @@ class Player:
 			return "The following items are in the room: %s" % items
 
 	def parseCommand(self):
-		"""parseCommand() Peramiters: None
-		parses command and calls corisponding action function.
-		"""
-
-		'''
-		Example inputss:
+		""" parseCommand()
+		
+		parses command and calls corresponding action function.
+		
+		Example inputs:
 			I want to move right
 			I want to move left
 			I want to move west
@@ -137,10 +174,7 @@ class Player:
 			backpack						( display inventory)
 			down search move left 			(this input moves you down, more restrictions?)
 			up dasioda dwjdnad adonad		(this moves you up, more restrictions?)
-			and a whole bunch of other shit
-
-			But is it too much freedom?
-		'''
+		"""
 
 
 		cmd = self.command.split(" ")
@@ -200,7 +234,10 @@ class Player:
 				return "Please input valid command"
 
 	def getItem(self, itemName):
-		"""getItem() Picks up key from room(temporary)"""
+		"""getItem() 
+		
+		Picks up key from room(temporary)
+		"""
 		curRoom = config.map.layout[self.location[0]][self.location[1]]
 		if not curRoom.itemList:
 			return "There is no item to get from this room"
@@ -212,9 +249,9 @@ class Player:
 				self.printInventory()
 			else:
 				return "There is no item called %s to get from this room" % itemName
-
+	
 	def printInventory(self):
-		"""printInventory() Peramiters: None
+		"""printInventory() 
 		prints items in inventory.
 		"""
 		items = ""
@@ -226,12 +263,16 @@ class Player:
 			return "There are no items in your inventory"
 		else:
 			return "The following items are in your inventory: %s" % items
-
+	
 	def move(self, dir, flag):
-		"""move() Peramiters: dir, flag
-		dir = direction to move
-		flag = if calling functions has determinded that player can move
-		moves player to room in givien direction.
+		""" move() 
+		
+		handles move action. if calling functions has determined that player can move,
+		moves player to room in given direction.
+		
+		Parameters:
+		dir () - direction to move
+		flag () - flag var
 		"""
 		output = ''
 		location = self.location
@@ -325,7 +366,9 @@ class Player:
 		return output
 
 def randomCoord():
-	"""randomCoord Peramiters: None
-	returns random coordinite on map.
+	"""randomCoord 
+	returns random coordinate on map.
+	
+	Return: (list[int][int]) - coordinates
 	"""
 	return [randint(0,config.ROWS-1), randint(0,config.COLS-1)]
