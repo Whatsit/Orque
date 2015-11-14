@@ -6,8 +6,15 @@ from tkinter import *
 from player import Player
 import config
 
+<<<<<<< HEAD
 class UI:
 	"""UI class"""
+=======
+
+class UI:
+	"""UI class
+	"""
+>>>>>>> refs/remotes/Whatsit/master
 	def __init__(self):
 		""" Default Constructor 
 		
@@ -36,10 +43,16 @@ class UI:
 
 		root.mainloop()
 		root.destroy()
+<<<<<<< HEAD
 	
 	def setCommand(self):
 		""" setCommand 
 		
+=======
+
+	def setCommand(self):
+		"""setCommand() Peramiters: None
+>>>>>>> refs/remotes/Whatsit/master
 		sets command of player = to what user types in ui form.
 		"""
 		config.pL[0].command = self.form.get()

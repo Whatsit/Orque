@@ -20,7 +20,7 @@ from item import Item
 
 class Room:
 	""" Room Class
-	
+
 	Attributes:
 	roomType (int) - type of room. 0 by default
 	itemList (list [item]) - list of items in the room
@@ -28,8 +28,8 @@ class Room:
 	adjacencyList (list [int]) - adjacency list for the room
 	"""
 	def __init__(self, type = 0):
-		""" Default Constructor 
-		
+		""" Default Constructor
+
 		Parameters:
 		type (int) - room type. 0 by default.
 		"""
@@ -40,7 +40,7 @@ class Room:
 
 	def describe(self):
 		""" describe
-		
+
 		Print description of the room.
 		The description will vary depending on the type of room.
 		"""
@@ -48,14 +48,14 @@ class Room:
 			print("There's a puzzle in this room")
 		else:
 			print("This is a normal room")
-	
+
 	def checkDoor(self):
 		""" checkDoor
-		
+
 		check the adjacency list of the room to see if a door is locked.
 		If the door is locked, return the direction of the door.
 		If multiple doors are locked, return all directions.
-		
+
 		Return: result (list) - list of locked door directions.
 		"""
 		result = []
@@ -63,16 +63,16 @@ class Room:
 			if self.adjacencyList[x] == 2:
 				result.append(x)
 		return result
-		
+
 	def hasItemByName(self, itemName):
 		""" hasItemByName
-		
+
 		checks if the room has a specific item. returns true if the item is in the room.
 		otherwise false.
-		
+
 		Parameters:
 		itemName (string) - name of the item to search
-		
+
 		Return: boolean - result
 		"""
 		for x in range(0, len(self.itemList)):

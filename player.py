@@ -27,6 +27,7 @@ PossibleUse = ['use']
 
 class Player:
 	"""Player class
+<<<<<<< HEAD
 	
 	Attributes:
 	playerID (int) - id
@@ -35,6 +36,8 @@ class Player:
 	inventory (list [item]) - player inventory
 	command (string) - requested action/command
 	playerPath (list) - list of player locations visited
+=======
+>>>>>>> refs/remotes/Whatsit/master
 	"""
 	def __init__(self, id):
 		""" Default Constructor
@@ -52,15 +55,21 @@ class Player:
 		config.map.layout[self.location[0]][self.location[1]].playerList.append(self)
 
 	def addItem(self, item):
+<<<<<<< HEAD
 		"""addItem() 
 		adds item to player inventory list.
 		
 		Parameters: 
 		item (item) - item to add
+=======
+		"""addItem() Peramiters: item
+		adds item to player inventroy list.
+>>>>>>> refs/remotes/Whatsit/master
 		"""
 		self.inventory.append(item)
 
 	def removeItem(self, item):
+<<<<<<< HEAD
 		""" removeItem() 
 		
 		removes item to inventory list
@@ -68,10 +77,15 @@ class Player:
 		Peramiters:
 		
 		item (item) - item to remove
+=======
+		"""removeItem() Peramiters: item
+		removes item to inventory list
+>>>>>>> refs/remotes/Whatsit/master
 		"""
 		self.inventory.remove(item)
 
 	def updateCom(self, string):
+<<<<<<< HEAD
 		""" updateItem() 
 		
 		sets player command as string.
@@ -90,6 +104,16 @@ class Player:
 		Parameters:
 		
 		value (string) - value to search
+=======
+		"""updateItem() Peramiters: string
+		sets player command as string.
+		"""
+		self.command = string
+
+
+	def getKeyByValue(self, value):
+		"""working on better way to handle associating directional keyword with num
+>>>>>>> refs/remotes/Whatsit/master
 		"""
 		key = ""
 		print(DIRECTIONS.values())
@@ -100,18 +124,24 @@ class Player:
 		print("key is", key)
 
 	def hasItemByName(self, itemName):
+<<<<<<< HEAD
 		""" hasItemByName()
 		
 		returns true or false if player has itemName in inventory.
 		
 		Parameters:
 		itemName (string) - item name to search
+=======
+		"""hasItemByName() Peramiters: itemName
+		returns true or false if player has itemName in inventory.
+>>>>>>> refs/remotes/Whatsit/master
 		"""
 		for x in range(0, len(self.inventory)):
 			item = self.inventory[x]
 			if item.name == itemName:
 				return True
 		return False
+<<<<<<< HEAD
 	
 	def useItem(self, itemName, dir):
 		"""useItem() 
@@ -122,6 +152,13 @@ class Player:
 		Parameters:
 		itemName (string) - item to use
 		dir (int) - direction to move
+=======
+
+	def useItem(self, itemName, dir):
+		"""useItem() Peramiters: itemName, dir
+		determins if player can use item on door
+		then if so moves player through door.
+>>>>>>> refs/remotes/Whatsit/master
 		"""
 		if not self.inventory:
 			return 'Inventory is empty'
@@ -148,10 +185,16 @@ class Player:
 							return "Invalid direction parameter"
 			else:
 				return "There is no item called %s in your inventory" % itemName
+<<<<<<< HEAD
 	
 	def search(self):
 		"""search()
 		
+=======
+
+	def search(self):
+		"""search() Peramiters: None
+>>>>>>> refs/remotes/Whatsit/master
 		seaches current room for items that can be picked up.
 		"""
 		items = ""
@@ -165,11 +208,20 @@ class Player:
 			return "The following items are in the room: %s" % items
 
 	def parseCommand(self):
+<<<<<<< HEAD
 		"""parseCommand()
 		
 		parses command and calls corresponding action function.
 		
 		Example inputs:
+=======
+		"""parseCommand() Peramiters: None
+		parses command and calls corisponding action function.
+		"""
+
+		'''
+		Example inputss:
+>>>>>>> refs/remotes/Whatsit/master
 			I want to move right
 			I want to move left
 			I want to move west
@@ -241,10 +293,14 @@ class Player:
 				return "Please input valid command"
 
 	def getItem(self, itemName):
+<<<<<<< HEAD
 		"""getItem() 
 		
 		Picks up key from room(temporary)
 		"""
+=======
+		"""getItem() Picks up key from room(temporary)"""
+>>>>>>> refs/remotes/Whatsit/master
 		curRoom = config.map.layout[self.location[0]][self.location[1]]
 		if not curRoom.itemList:
 			return "There is no item to get from this room"
@@ -256,10 +312,16 @@ class Player:
 				self.printInventory()
 			else:
 				return "There is no item called %s to get from this room" % itemName
+<<<<<<< HEAD
 	
 	def printInventory(self):
 		"""printInventory() 
 		
+=======
+
+	def printInventory(self):
+		"""printInventory() Peramiters: None
+>>>>>>> refs/remotes/Whatsit/master
 		prints items in inventory.
 		"""
 		items = ""
@@ -271,6 +333,7 @@ class Player:
 			return "There are no items in your inventory"
 		else:
 			return "The following items are in your inventory: %s" % items
+<<<<<<< HEAD
 	
 	def move(self, dir, flag):
 		"""move() 
@@ -281,6 +344,14 @@ class Player:
 		Parameters:
 		dir () - direction to move
 		flag () - flag var
+=======
+
+	def move(self, dir, flag):
+		"""move() Peramiters: dir, flag
+		dir = direction to move
+		flag = if calling functions has determinded that player can move
+		moves player to room in givien direction.
+>>>>>>> refs/remotes/Whatsit/master
 		"""
 		output = ''
 		location = self.location
@@ -374,9 +445,14 @@ class Player:
 		return output
 
 def randomCoord():
+<<<<<<< HEAD
 	"""randomCoord 
 	returns random coordinate on map.
 	
 	Return: (list[int][int]) - coordinates
+=======
+	"""randomCoord Peramiters: None
+	returns random coordinite on map.
+>>>>>>> refs/remotes/Whatsit/master
 	"""
 	return [randint(0,config.ROWS-1), randint(0,config.COLS-1)]
