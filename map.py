@@ -50,12 +50,6 @@ class Map:
 
 		for i in range(ROWS):
 			for j in range(COLS):
-<<<<<<< HEAD
-				""" Decide on room type """
-				x = randint(1,100)
-				if x >= 90:
-					self.addRoom(i,j,Room(1))	""" Initialize puzzle room """
-=======
 				boolBreakConstraint = False
 				
 				if onHold > 0:
@@ -64,7 +58,7 @@ class Map:
 					x = randint(1,100)	#Decide on room type
 				
 				if x >= 90:
-					#checks if room to be added is within 1 space of a puzzle room
+					""" checks if room to be added is within 1 space of a puzzle room """
 					for pRC in tmpPuzzleRoomCoord:
 						#if i == pRC[0]+1 or i == pRC[0]-1 or j == pRC[1]+1 or j == pRC[1]-1:
 						if manhattanDist([i,j],pRC) <= 2:
@@ -73,10 +67,9 @@ class Map:
 							onHold += 1
 							break
 					if boolBreakConstraint == False:			
-						self.addRoom(i,j,Room(1))			#Initialize puzzle room
-						tmpPuzzleRoomCoord.append([i,j])	#Temporarily store puzzle room coord in puzzle list
+						self.addRoom(i,j,Room(1))			""" Initialize puzzle room """
+						tmpPuzzleRoomCoord.append([i,j])	""" Temporarily store puzzle room coord in puzzle list """
 						onHold = 0
->>>>>>> refs/remotes/Whatsit/master
 				else:
 					self.addRoom(i,j,Room())	""" Initialize normal room """
 
@@ -116,47 +109,32 @@ class Map:
 				""" there must be at least 1 corridor """
 				if self.layout[i][j].adjacencyList[1] == 0 and self.layout[i][j].adjacencyList[2] == 0 and i != ROWS-1 and j != COLS-1:
 					self.layout[i][j].adjacencyList[randint(1,2)] = 1
-<<<<<<< HEAD
-		""" Debug """
-=======
-		'''
+		"""
 		#Debug
->>>>>>> refs/remotes/Whatsit/master
 		for i in range(ROWS):
 			for j in range(COLS):
 				print(self.layout[i][j].adjacencyList, end = '')
 			print()
 		for i in range(len(tmpPuzzleRoomCoord)):
 			print(tmpPuzzleRoomCoord[i])
-		'''
+		"""
 
 		return tmpPuzzleRoomCoord
 
-
-<<<<<<< HEAD
-	def printMap(self):
+	def printMap(self,id,type=0):
 		""" printMap
 		
 		Prints the map. Red lines denote a locked door. Blue lines denote the player.
 		As the player explores, more lines on the map appear corresponding to the places
 		that the player has been at.
 		"""
-=======
-	def printMap(self,id,type=0):
->>>>>>> refs/remotes/Whatsit/master
 		for i in range(ROWS):
 			topLine = ""
 			midLine = ""
 			botLine = ""
 			for j in range(COLS):
-<<<<<<< HEAD
-				if [i,j] in config.pL[0].playerPath:
-
-					""" Top line North """
-=======
 				if [i,j] in config.pL[id].playerPath or type == 1:
-					#Top line North
->>>>>>> refs/remotes/Whatsit/master
+					""" Top line North """
 					if self.layout[i][j].adjacencyList[0] == 1:
 						topLine += " | "
 					elif self.layout[i][j].adjacencyList[0] == 2:
