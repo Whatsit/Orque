@@ -24,14 +24,14 @@ config.map = Map()
 config.map.randomConnectedMap()
 
 #Initialize and spawn players
-for p in range(0,2):
+for p in range(0,1):
 	tmpPlayer = Player(p)
 	config.pL.append(tmpPlayer)
 #config.map.layout[0][0].playerList.append(config.pL[0])
 
 #Spawn key
 key = Item(1,"key")
-config.map.layout[0][1].itemList.append(key)
+config.map.layout[config.pL[0].location[0]][config.pL[0].location[1]].itemList.append(key)
 #print(config.map.layout[1][0].itemList[0].name)
 
 #Initial map
@@ -50,8 +50,8 @@ while True:
 			sys.exit()
 		else:
 			print(config.pL[p].parseCommand())
-		config.pL[p].command = input("Press enter to continue: ")
-		os.system('cls' if os.name == 'nt' else 'clear')
+		#config.pL[p].command = input("Press enter to continue: ")
+		#os.system('cls' if os.name == 'nt' else 'clear')
 
 #Timer logic code (To be implemented later)
 '''
