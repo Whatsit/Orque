@@ -6,6 +6,8 @@ Possible actions are: move, search, get, use, and check inventory.
 """
 import config
 import itertools
+import sys
+from threading import Timer, Thread
 from map import Map
 from room import Room
 from random import randint
@@ -139,6 +141,8 @@ class Player:
 							self.move(3, True)
 						else:
 							return "Invalid direction parameter"
+				if config.map.layout[self.location[0]][self.location[1]].roomType == 1:
+					attemptPuzzle()
 			else:
 				return "There is no item called %s in your inventory" % itemName 
 	
@@ -362,7 +366,7 @@ class Player:
 			print(newRoom.adjacencyList)
 		else:
 			print(curRoom.adjacencyList)
-		config.map.printMap(self.playerId)
+		#config.map.printMap(self.playerId)
 		return output
 
 def randomCoord():
@@ -372,3 +376,30 @@ def randomCoord():
 	Return: (list[int][int]) - coordinates
 	"""
 	return [randint(0,config.ROWS-1), randint(0,config.COLS-1)]
+
+def attemptPuzzle():
+	global timeOut 
+	global playerAnswer
+	timeOut = False
+	playerAnswer = None
+	puzzleThread = Thread(target=startPuzzle)
+	puzzleThread.daemon = True
+	puzzleThread.start()
+	puzzleThread.join(1)
+	if playerAnswer is None:
+		print("\nToo slow my friend, you're dead!\nPress enter to continue")
+		timeOut = True
+
+playerAnswer = None
+timeOut = False
+def startPuzzle():
+	global playerAnswer
+	global timeOut
+	question = "1+1= "
+	realAnswer = 2
+	playerAnswer = input(question)
+	if timeOut == False:
+		if playerAnswer == str(realAnswer):
+			print("How clever, you're correct!")
+		else:
+			print("Were you dropped as a baby? Welp, doesnt matter now, you're dead!")
