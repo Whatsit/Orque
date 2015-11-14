@@ -1,8 +1,7 @@
 """Item Module
 
 This module contains Item class.
-"""
-"""Item class
+Item class
 Stores an id, and a name.
 
 Attributes:

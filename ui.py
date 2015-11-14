@@ -2,9 +2,10 @@ from tkinter import *
 from player import Player
 import config
 
-"""UI class
-"""
+
 class UI:
+	"""UI class
+	"""
 	def __init__(self):
 
 		root = Tk()
@@ -30,10 +31,11 @@ class UI:
 
 		root.mainloop()
 		root.destroy()
-	"""setCommand() Peramiters: None
-	sets command of player = to what user types in ui form.
-	"""
+
 	def setCommand(self):
+		"""setCommand() Peramiters: None
+		sets command of player = to what user types in ui form.
+		"""
 		config.pL[0].command = self.form.get()
 		outputString = config.pL[0].parseCommand()
 		self.output.set(outputString)
