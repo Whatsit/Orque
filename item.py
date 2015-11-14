@@ -1,12 +1,7 @@
 """Item Module
 
 This module contains Item class.
-<<<<<<< HEAD
 """
-=======
-Item class
-Stores an id, and a name.
->>>>>>> refs/remotes/Whatsit/master
 
 class Item(object):
 	"""Item class
