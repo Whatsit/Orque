@@ -1,0 +1,77 @@
+syntax = "proto2";
+
+message PlayerMessage {
+
+	required int32 playerId = 1;
+	optional string name = 2;
+	required int32 health = 3;
+	required InventoryMessage inventory = 4;
+	required LocationMessage location = 5;
+	required PathMessage path = 6;
+	
+}
+
+message LocationMessage {
+
+	required int32 x = 1;
+	required int32 y = 2;
+
+}
+
+message ItemMessage {
+
+	required string itemName = 1;
+
+}
+
+message MapMessage {
+
+	repeated RoomMessage room = 1;
+
+}
+
+message RoomMessage {
+
+	required LocationMessage location = 1;
+	required AdjacencyListMessage adjacencyList = 2;
+	required InventoryMessage inventory = 3;
+	required int32 type = 4;
+	optional string puzzle = 5;
+	optional string solution = 6;
+	required PlayerListMessage playerList = 7;
+
+}
+
+message AdjacencyListMessage {
+
+	required int32 north = 1;
+	required int32 east = 2;
+	required int32 south = 3;
+	required int32 west = 4;
+
+}
+
+message PlayerListMessage {
+
+	repeated PlayerMessage player = 1;
+
+}
+
+message InventoryMessage {
+
+	repeated ItemMessage item = 1;
+
+}
+
+message PathMessage {
+
+	repeated LocationMessage location = 1;
+
+}
+
+message GameMessage {
+
+	required PlayerListMessage playerList = 1;
+	required MapMessage map = 2;
+
+}
