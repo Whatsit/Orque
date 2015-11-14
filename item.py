@@ -2,6 +2,7 @@
 
 This module contains Item class.
 """
+
 class Item(object):
 	"""Item class
 	Stores an id, and a name.

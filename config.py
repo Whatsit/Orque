@@ -1,4 +1,5 @@
-"""config
+""" Config
+
 Contains global variables for orque.
 """
 map = None

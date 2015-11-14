@@ -1,3 +1,10 @@
+""" Map Module
+
+This module contains the layout for the map. It has a function to
+randomly generate a map. The Map class also handles printing the map.
+
+"""
+
 import config
 from room import Room
 from random import randint
@@ -8,12 +15,6 @@ init()
 ROWS = config.ROWS
 COLS = config.COLS
 
-""" Map Module
-
-This module contains the layout for the map. It has a function to
-randomly generate a map. The Map class also handles printing the map.
-
-"""
 class Map:
 	""" Map Class
 	

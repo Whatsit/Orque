@@ -1,4 +1,8 @@
-"""Player class
+"""Player Module
+
+Handles player movements and possible actions.
+Parses player input and exectues action.
+Possible actions are: move, search, get, use, and check inventory.
 """
 import config
 import itertools
@@ -20,11 +24,22 @@ PossibleInventories = ['inventory','backpack','items','found']
 PossibleGet = ['get','take','steal','grab']
 PossibleUse = ['use']
 
-"""Player class
-"""
 class Player:
+	"""Player class
+	
+	Attributes:
+	playerID (int) - id
+	name (string) - player name. defaults to "default"
+	health (int) - health. defaults to 1
+	inventory (list [item]) - player inventory
+	command (string) - requested action/command
+	playerPath (list) - list of player locations visited
+	"""
 	def __init__(self, id):
-		"""Peramiters
+		""" Default Constructor
+		
+		Parameters: 
+		id (int) - player id
 		"""
 		self.playerId = id
 		self.name = "Default"
@@ -34,24 +49,47 @@ class Player:
 		self.command = ""
 		self.playerPath = [self.location]
 		config.map.layout[self.location[0]][self.location[1]].playerList.append(self)
-	"""addItem() Peramiters: item
-	adds item to player inventroy list.
-	"""
+
 	def addItem(self, item):
+		"""addItem() 
+		adds item to player inventory list.
+		
+		Parameters: 
+		item (item) - item to add
+		"""
 		self.inventory.append(item)
-	"""removeItem() Peramiters: item
-	removes item to inventory list
-	"""
+
 	def removeItem(self, item):
+		""" removeItem() 
+		
+		removes item to inventory list
+		
+		Peramiters:
+		
+		item (item) - item to remove
+		"""
 		self.inventory.remove(item)
-	"""updateItem() Peramiters: string
-	sets player command as string.
-	"""
+
 	def updateCom(self, string):
+		""" updateItem() 
+		
+		sets player command as string.
+		
+		Parameters:
+		string (string) - command
+		"""
 		self.command = string
 
-	"""working on better way to handle associating directional keyword with num"""
+	#working on better way to handle associating directional keyword with num
 	def getKeyByValue(self, value):
+		""" getKeyByValue
+		
+		get directional value given a value from DIRECTIONS
+		
+		Parameters:
+		
+		value (string) - value to search
+		"""
 		key = ""
 		print(DIRECTIONS.values())
 		for x in range(0, 4):
@@ -60,20 +98,30 @@ class Player:
 				key = list(DIRECTIONS.keys())[x]
 		print("key is", key)
 
-	"""hasItemByName() Peramiters: itemName
-	returns true or false if player has itemName in inventory.
-	"""
 	def hasItemByName(self, itemName):
+		""" hasItemByName()
+		
+		returns true or false if player has itemName in inventory.
+		
+		Parameters:
+		itemName (string) - item name to search
+		"""
 		for x in range(0, len(self.inventory)):
 			item = self.inventory[x]
 			if item.name == itemName:
 				return True
 		return False
-	"""useItem() Peramiters: itemName, dir
-	determins if player can use item on door
-	then if so moves player through door.
-	"""
+	
 	def useItem(self, itemName, dir):
+		"""useItem() 
+		
+		determines if player can use item on door
+		if so moves player through door.
+		
+		Parameters:
+		itemName (string) - item to use
+		dir (int) - direction to move
+		"""
 		if not self.inventory:
 			return 'Inventory is empty'
 		else:
@@ -99,10 +147,12 @@ class Player:
 							return "Invalid direction parameter"
 			else:
 				return "There is no item called %s in your inventory" % itemName
-	"""search() Peramiters: None
-	seaches current room for items that can be picked up.
-	"""
+	
 	def search(self):
+		"""search()
+		
+		seaches current room for items that can be picked up.
+		"""
 		items = ""
 		for i in config.map.layout[self.location[0]][self.location[1]].itemList:
 			items += i.name + ", "
@@ -113,13 +163,12 @@ class Player:
 		else:
 			return "The following items are in the room: %s" % items
 
-	"""parseCommand() Peramiters: None
-	parses command and calls corisponding action function.
-	"""
 	def parseCommand(self):
-
-		'''
-		Example inputss:
+		"""parseCommand()
+		
+		parses command and calls corresponding action function.
+		
+		Example inputs:
 			I want to move right
 			I want to move left
 			I want to move west
@@ -131,10 +180,7 @@ class Player:
 			backpack						( display inventory)
 			down search move left 			(this input moves you down, more restrictions?)
 			up dasioda dwjdnad adonad		(this moves you up, more restrictions?)
-			and a whole bunch of other shit
-
-			But is it too much freedom?
-		'''
+		"""
 
 
 		cmd = self.command.split(" ")
@@ -193,8 +239,11 @@ class Player:
 			elif i == len(cmd)-1:
 				return "Please input valid command"
 
-	"""getItem() Picks up key from room(temporary)"""
 	def getItem(self, itemName):
+		"""getItem() 
+		
+		Picks up key from room(temporary)
+		"""
 		curRoom = config.map.layout[self.location[0]][self.location[1]]
 		if not curRoom.itemList:
 			return "There is no item to get from this room"
@@ -206,10 +255,12 @@ class Player:
 				self.printInventory()
 			else:
 				return "There is no item called %s to get from this room" % itemName
-	"""printInventory() Peramiters: None
-	prints items in inventory.
-	"""
+	
 	def printInventory(self):
+		"""printInventory() 
+		
+		prints items in inventory.
+		"""
 		items = ""
 		for i in self.inventory:
 			items += i.name + ", "
@@ -219,12 +270,17 @@ class Player:
 			return "There are no items in your inventory"
 		else:
 			return "The following items are in your inventory: %s" % items
-	"""move() Peramiters: dir, flag
-	dir = direction to move
-	flag = if calling functions has determinded that player can move
-	moves player to room in givien direction.
-	"""
+	
 	def move(self, dir, flag):
+		"""move() 
+		
+		handles move action. if calling functions has determined that player can move,
+		moves player to room in given direction.
+		
+		Parameters:
+		dir () - direction to move
+		flag () - flag var
+		"""
 		output = ''
 		location = self.location
 		newLoc = self.location
@@ -316,8 +372,10 @@ class Player:
 		config.map.printMap(self.playerId)
 		return output
 
-"""randomCoord Peramiters: None
-returns random coordinite on map.
-"""
 def randomCoord():
+	"""randomCoord 
+	returns random coordinate on map.
+	
+	Return: (list[int][int]) - coordinates
+	"""
 	return [randint(0,config.ROWS-1), randint(0,config.COLS-1)]
