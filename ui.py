@@ -1,11 +1,10 @@
-"""ui"""
 from tkinter import *
 from player import Player
 import config
 
-"""UI class"""
+"""UI class
+"""
 class UI:
-	"""Initialize UI"""
 	def __init__(self):
 
 		root = Tk()
