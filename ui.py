@@ -1,22 +1,13 @@
-<<<<<<< HEAD
 """ UI Module
 
 Handles UI for Orque
 """
-=======
->>>>>>> refs/remotes/Whatsit/master
 from tkinter import *
 from player import Player
 import config
 
-<<<<<<< HEAD
 class UI:
 	"""UI class"""
-=======
-"""UI class
-"""
-class UI:
->>>>>>> refs/remotes/Whatsit/master
 	def __init__(self):
 		""" Default Constructor 
 		

@@ -37,14 +37,11 @@ class Player:
 	playerPath (list) - list of player locations visited
 	"""
 	def __init__(self, id):
-<<<<<<< HEAD
 		""" Default Constructor
 		
 		Parameters: 
 		id (int) - player id
 		"""
-=======
->>>>>>> refs/remotes/Whatsit/master
 		self.playerId = id
 		self.name = "Default"
 		self.health = 1
@@ -84,12 +81,7 @@ class Player:
 		"""
 		self.command = string
 
-<<<<<<< HEAD
 	#working on better way to handle associating directional keyword with num
-=======
-	"""working on better way to handle associating directional keyword with num
-	"""
->>>>>>> refs/remotes/Whatsit/master
 	def getKeyByValue(self, value):
 		""" getKeyByValue
 		
