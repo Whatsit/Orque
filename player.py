@@ -1,3 +1,5 @@
+"""Player class
+"""
 import config
 import itertools
 import sys
@@ -6,6 +8,7 @@ from map import Map
 from room import Room
 from random import randint
 
+"""Dictionaries for movement directions: """
 DIRECTIONS = {'0' : ['top','up','north'], '1' : ['right','east'], '2' : ['down','south','bottom','bot'], '3' : ['left','west']}
 
 PossibleMoves = ['down','south','bottom','bot','top','up','north','left','west','right','east']
@@ -19,8 +22,12 @@ PossibleInventories = ['inventory','backpack','items','found']
 PossibleGet = ['get','take','steal','grab']
 PossibleUse = ['use']
 
+"""Player class
+"""
 class Player:
 	def __init__(self, id):
+		"""Peramiters
+		"""
 		self.playerId = id
 		self.name = "Default"
 		self.health = 1
@@ -29,17 +36,23 @@ class Player:
 		self.command = ""
 		self.playerPath = [self.location]
 		config.map.layout[self.location[0]][self.location[1]].playerList.append(self)
-
+	"""addItem() Peramiters: item
+	adds item to player inventroy list.
+	"""
 	def addItem(self, item):
 		self.inventory.append(item)
-
+	"""removeItem() Peramiters: item
+	removes item to inventory list
+	"""
 	def removeItem(self, item):
 		self.inventory.remove(item)
-
+	"""updateItem() Peramiters: string
+	sets player command as string.
+	"""
 	def updateCom(self, string):
 		self.command = string
 
-	#working on better way to handle associating directional keyword with num
+	"""working on better way to handle associating directional keyword with num"""
 	def getKeyByValue(self, value):
 		key = ""
 		print(DIRECTIONS.values())
@@ -49,14 +62,19 @@ class Player:
 				key = list(DIRECTIONS.keys())[x]
 		print("key is", key)
 
-
+	"""hasItemByName() Peramiters: itemName
+	returns true or false if player has itemName in inventory.
+	"""
 	def hasItemByName(self, itemName):
 		for x in range(0, len(self.inventory)):
 			item = self.inventory[x]
 			if item.name == itemName:
 				return True
 		return False
-
+	"""useItem() Peramiters: itemName, dir
+	determins if player can use item on door
+	then if so moves player through door.
+	"""
 	def useItem(self, itemName, dir):
 		if not self.inventory:
 			return 'Inventory is empty'
@@ -85,7 +103,9 @@ class Player:
 					attemptPuzzle()
 			else:
 				return "There is no item called %s in your inventory" % itemName
-
+	"""search() Peramiters: None
+	seaches current room for items that can be picked up.
+	"""
 	def search(self):
 		items = ""
 		for i in config.map.layout[self.location[0]][self.location[1]].itemList:
@@ -97,8 +117,10 @@ class Player:
 		else:
 			return "The following items are in the room: %s" % items
 
+	"""parseCommand() Peramiters: None
+	parses command and calls corisponding action function.
+	"""
 	def parseCommand(self):
-		#FUCKING TOTAL FREEDOM BITCH TEMPLATE
 
 		'''
 		Example inputss:
@@ -123,8 +145,10 @@ class Player:
 
 		for i in range(0, len(cmd)):
 			s = cmd[i]
-			if s in MoveIndicate:						#if move is found first, then check next input for direction
-				if i != len(cmd)-1:						#if there is anything after move command
+			"""if move is found first, then check next input for direction"""
+			if s in MoveIndicate:
+				"""if there is anything after move command"""
+				if i != len(cmd)-1:
 					if cmd[i+1] in Up:
 						return self.move(0,False)
 					elif cmd[i+1] in Right:
@@ -139,7 +163,8 @@ class Player:
 				else:
 					return "Please type in a direction to move"
 					break
-			elif s in PossibleMoves:				#if direction is indicated without move
+			"""if direction is indicated without move"""
+			elif s in PossibleMoves:
 				if cmd[i] in Up:
 					return self.move(0,False)
 				if cmd[i] in Right:
@@ -168,10 +193,11 @@ class Player:
 					return self.useItem(cmd[i+1], None)
 				i = len(cmd)
 				break
-			elif i == len(cmd)-1:				#no valid commands were found
+			"""no valid commands were found"""
+			elif i == len(cmd)-1:
 				return "Please input valid command"
 
-	#Picks up key from room(temporary)
+	"""getItem() Picks up key from room(temporary)"""
 	def getItem(self, itemName):
 		curRoom = config.map.layout[self.location[0]][self.location[1]]
 		if not curRoom.itemList:
@@ -184,7 +210,9 @@ class Player:
 				self.printInventory()
 			else:
 				return "There is no item called %s to get from this room" % itemName
-
+	"""printInventory() Peramiters: None
+	prints items in inventory.
+	"""
 	def printInventory(self):
 		items = ""
 		for i in self.inventory:
@@ -195,14 +223,24 @@ class Player:
 			return "There are no items in your inventory"
 		else:
 			return "The following items are in your inventory: %s" % items
-
+	"""move() Peramiters: dir, flag
+	dir = direction to move
+	flag = if calling functions has determinded that player can move
+	moves player to room in givien direction.
+	"""
 	def move(self, dir, flag):
 		output = ''
 		location = self.location
 		newLoc = self.location
 		curRoom = config.map.layout[location[0]][location[1]]
 		print(curRoom.adjacencyList)
+<<<<<<< HEAD
 		if dir == 0:	#north
+=======
+		config.map.printMap(self.playerId)
+		"""move north"""
+		if dir == 0:
+>>>>>>> refs/remotes/Whatsit/master
 			check = curRoom.adjacencyList[0]
 			if check == 1 or flag == True:
 				newLoc = [location[0]-1, location[1]]
@@ -210,7 +248,7 @@ class Player:
 				newRoom = config.map.layout[newLoc[0]][newLoc[1]]
 				newRoom.playerList.append(self)
 				self.location = newLoc
-				# Append to playerPath and insure no duplicates
+				"""Append to playerPath and insure no duplicates"""
 				self.playerPath.append(newLoc)
 				self.playerPath.sort()
 				self.playerPath = list(k for k,_ in itertools.groupby(self.playerPath))
@@ -220,7 +258,8 @@ class Player:
 			else:
 				output = 'You hit a wall...'
 			print(self.location)
-		elif dir == 1:	#east
+		"""move east"""
+		elif dir == 1:
 			check = curRoom.adjacencyList[1]
 			if check == 1 or flag == True:
 				newLoc = [location[0], location[1]+1]
@@ -228,7 +267,7 @@ class Player:
 				newRoom = config.map.layout[newLoc[0]][newLoc[1]]
 				newRoom.playerList.append(self)
 				self.location = newLoc
-				# Append to playerPath and insure no duplicates
+				"""Append to playerPath and insure no duplicates"""
 				self.playerPath.append(newLoc)
 				self.playerPath.sort()
 				self.playerPath = list(k for k,_ in itertools.groupby(self.playerPath))
@@ -238,7 +277,8 @@ class Player:
 			else:
 				output = 'You hit a wall...'
 			print(self.location)
-		elif dir == 2:	#south
+		"""move south"""
+		elif dir == 2:
 			check = curRoom.adjacencyList[2]
 			if check == 1 or flag == True:
 				newLoc = [location[0]+1, location[1]]
@@ -246,7 +286,7 @@ class Player:
 				newRoom = config.map.layout[newLoc[0]][newLoc[1]]
 				newRoom.playerList.append(self)
 				self.location = newLoc
-				# Append to playerPath and insure no duplicates
+				"""Append to playerPath and insure no duplicates"""
 				self.playerPath.append(newLoc)
 				self.playerPath.sort()
 				self.playerPath = list(k for k,_ in itertools.groupby(self.playerPath))
@@ -256,7 +296,8 @@ class Player:
 			else:
 				output = 'You hit a wall...'
 			print(self.location)
-		elif dir == 3:	#west
+		"""move west"""
+		elif dir == 3:
 			check = curRoom.adjacencyList[3]
 			if check == 1 or flag == True:
 				newLoc = [location[0], location[1]-1]
@@ -264,7 +305,7 @@ class Player:
 				newRoom = config.map.layout[newLoc[0]][newLoc[1]]
 				newRoom.playerList.append(self)
 				self.location = newLoc
-				# Append to playerPath and insure no duplicates
+				"""Append to playerPath and insure no duplicates"""
 				self.playerPath.append(newLoc)
 				self.playerPath.sort()
 				self.playerPath = list(k for k,_ in itertools.groupby(self.playerPath))
@@ -283,6 +324,9 @@ class Player:
 		config.map.printMap(self.playerId)
 		return output
 
+"""randomCoord Peramiters: None
+returns random coordinite on map.
+"""
 def randomCoord():
 	return [randint(0,config.ROWS-1), randint(0,config.COLS-1)]
 
