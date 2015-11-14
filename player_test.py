@@ -1,8 +1,21 @@
 import unittest
 from player import Player
+from room import Room
 from map import Map
+from item import Item
 
-class Player_Test(unitcase.TestCase):
+class PlayerTestCase(unitcase.TestCase):
+	def assert_location_equal(self, p, location):
+		self.assertEqual(p.location, location)
+
+class PlayerTest(PlayerTestCase):
+
+	def setup(self):
+		self.p = Player()
+		self.m = Map()
+		self.m
+
+
 	def test_move_into_wall(self):
 		p = Player()
 		p.location = [0,0]
