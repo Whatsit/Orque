@@ -14,6 +14,9 @@ class PlayerTestCase(unittest.TestCase):
 
 	def assert_get_item_string_equal(self, p, string):
 		self.assertEqual(p.getItem('key'), string)
+		
+	def assert_use_item_string_equal(self, p, string):
+		self.assertEqual(p.useItem('key',2), string)
 
 class PlayerTest(PlayerTestCase):
 	def test_move_into_wall(self):
@@ -122,7 +125,5 @@ class PlayerTest(PlayerTestCase):
 		p.location = [0,0]
 		config.map.layout[0][0].playerList.append(p)
 		config.pL.append(p)
-		p.useItem("key",2)
-		p.move(2,False)
-		self.assert_location_equal(p, [0,0])
+		self.assert_use_item_string_equal(p, "Inventory is empty")
 
