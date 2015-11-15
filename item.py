@@ -10,11 +10,7 @@ class Item(object):
 	Attributes:
 	id (int) - id of item
 	name (string) - name of item
-<<<<<<< HEAD
-	"""
-=======
     """
->>>>>>> refs/remotes/Whatsit/master
     def __init__(self, id, name):
 		#Item constructor
         self.id = id
