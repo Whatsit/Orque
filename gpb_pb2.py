@@ -18,7 +18,8 @@ _sym_db = _symbol_database.Default()
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='gpb.proto',
   package='',
-  serialized_pb=_b('\n\tgpb.proto\"\xa5\x01\n\rPlayerMessage\x12\x10\n\x08playerId\x18\x01 \x02(\x05\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0e\n\x06health\x18\x03 \x02(\x05\x12$\n\tinventory\x18\x04 \x02(\x0b\x32\x11.InventoryMessage\x12\"\n\x08location\x18\x05 \x02(\x0b\x32\x10.LocationMessage\x12\x1a\n\x04path\x18\x06 \x02(\x0b\x32\x0c.PathMessage\"\'\n\x0fLocationMessage\x12\t\n\x01x\x18\x01 \x02(\x05\x12\t\n\x01y\x18\x02 \x02(\x05\"\x1f\n\x0bItemMessage\x12\x10\n\x08itemName\x18\x01 \x02(\t\"(\n\nMapMessage\x12\x1a\n\x04room\x18\x01 \x03(\x0b\x32\x0c.RoomMessage\"\xdd\x01\n\x0bRoomMessage\x12\"\n\x08location\x18\x01 \x02(\x0b\x32\x10.LocationMessage\x12,\n\radjacencyList\x18\x02 \x02(\x0b\x32\x15.AdjacencyListMessage\x12$\n\tinventory\x18\x03 \x02(\x0b\x32\x11.InventoryMessage\x12\x0c\n\x04type\x18\x04 \x02(\x05\x12\x0e\n\x06puzzle\x18\x05 \x01(\t\x12\x10\n\x08solution\x18\x06 \x01(\t\x12&\n\nplayerList\x18\x07 \x02(\x0b\x32\x12.PlayerListMessage\"P\n\x14\x41\x64jacencyListMessage\x12\r\n\x05north\x18\x01 \x02(\x05\x12\x0c\n\x04\x65\x61st\x18\x02 \x02(\x05\x12\r\n\x05south\x18\x03 \x02(\x05\x12\x0c\n\x04west\x18\x04 \x02(\x05\"3\n\x11PlayerListMessage\x12\x1e\n\x06player\x18\x01 \x03(\x0b\x32\x0e.PlayerMessage\".\n\x10InventoryMessage\x12\x1a\n\x04item\x18\x01 \x03(\x0b\x32\x0c.ItemMessage\"1\n\x0bPathMessage\x12\"\n\x08location\x18\x01 \x03(\x0b\x32\x10.LocationMessage\"O\n\x0bGameMessage\x12&\n\nplayerList\x18\x01 \x02(\x0b\x32\x12.PlayerListMessage\x12\x18\n\x03map\x18\x02 \x02(\x0b\x32\x0b.MapMessage')
+  syntax='proto2',
+  serialized_pb=_b('\n\tgpb.proto\"\xa5\x01\n\rPlayerMessage\x12\x10\n\x08playerId\x18\x01 \x02(\x05\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0e\n\x06health\x18\x03 \x02(\x05\x12$\n\tinventory\x18\x04 \x01(\x0b\x32\x11.InventoryMessage\x12\"\n\x08location\x18\x05 \x02(\x0b\x32\x10.LocationMessage\x12\x1a\n\x04path\x18\x06 \x01(\x0b\x32\x0c.PathMessage\"\'\n\x0fLocationMessage\x12\t\n\x01x\x18\x01 \x02(\x05\x12\t\n\x01y\x18\x02 \x02(\x05\"\x1f\n\x0bItemMessage\x12\x10\n\x08itemName\x18\x01 \x02(\t\"(\n\nMapMessage\x12\x1a\n\x04room\x18\x01 \x03(\x0b\x32\x0c.RoomMessage\"\xb5\x01\n\x0bRoomMessage\x12\"\n\x08location\x18\x01 \x02(\x0b\x32\x10.LocationMessage\x12,\n\radjacencyList\x18\x02 \x02(\x0b\x32\x15.AdjacencyListMessage\x12$\n\tinventory\x18\x03 \x01(\x0b\x32\x11.InventoryMessage\x12\x0c\n\x04type\x18\x04 \x02(\x05\x12\x0e\n\x06puzzle\x18\x05 \x01(\t\x12\x10\n\x08solution\x18\x06 \x01(\t\"P\n\x14\x41\x64jacencyListMessage\x12\r\n\x05north\x18\x01 \x02(\x05\x12\x0c\n\x04\x65\x61st\x18\x02 \x02(\x05\x12\r\n\x05south\x18\x03 \x02(\x05\x12\x0c\n\x04west\x18\x04 \x02(\x05\"3\n\x11PlayerListMessage\x12\x1e\n\x06player\x18\x01 \x03(\x0b\x32\x0e.PlayerMessage\".\n\x10InventoryMessage\x12\x1a\n\x04item\x18\x01 \x03(\x0b\x32\x0c.ItemMessage\"1\n\x0bPathMessage\x12\"\n\x08location\x18\x01 \x03(\x0b\x32\x10.LocationMessage\"O\n\x0bGameMessage\x12&\n\nplayerList\x18\x01 \x02(\x0b\x32\x12.PlayerListMessage\x12\x18\n\x03map\x18\x02 \x02(\x0b\x32\x0b.MapMessage')
 )
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -55,7 +56,7 @@ _PLAYERMESSAGE = _descriptor.Descriptor(
       options=None),
     _descriptor.FieldDescriptor(
       name='inventory', full_name='PlayerMessage.inventory', index=3,
-      number=4, type=11, cpp_type=10, label=2,
+      number=4, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -69,7 +70,7 @@ _PLAYERMESSAGE = _descriptor.Descriptor(
       options=None),
     _descriptor.FieldDescriptor(
       name='path', full_name='PlayerMessage.path', index=5,
-      number=6, type=11, cpp_type=10, label=2,
+      number=6, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -82,6 +83,7 @@ _PLAYERMESSAGE = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -119,6 +121,7 @@ _LOCATIONMESSAGE = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -149,6 +152,7 @@ _ITEMMESSAGE = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -179,6 +183,7 @@ _MAPMESSAGE = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -210,7 +215,7 @@ _ROOMMESSAGE = _descriptor.Descriptor(
       options=None),
     _descriptor.FieldDescriptor(
       name='inventory', full_name='RoomMessage.inventory', index=2,
-      number=3, type=11, cpp_type=10, label=2,
+      number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -236,13 +241,6 @@ _ROOMMESSAGE = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
-    _descriptor.FieldDescriptor(
-      name='playerList', full_name='RoomMessage.playerList', index=6,
-      number=7, type=11, cpp_type=10, label=2,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
   ],
   extensions=[
   ],
@@ -251,11 +249,12 @@ _ROOMMESSAGE = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
   serialized_start=298,
-  serialized_end=519,
+  serialized_end=479,
 )
 
 
@@ -302,11 +301,12 @@ _ADJACENCYLISTMESSAGE = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=521,
-  serialized_end=601,
+  serialized_start=481,
+  serialized_end=561,
 )
 
 
@@ -332,11 +332,12 @@ _PLAYERLISTMESSAGE = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=603,
-  serialized_end=654,
+  serialized_start=563,
+  serialized_end=614,
 )
 
 
@@ -362,11 +363,12 @@ _INVENTORYMESSAGE = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=656,
-  serialized_end=702,
+  serialized_start=616,
+  serialized_end=662,
 )
 
 
@@ -392,11 +394,12 @@ _PATHMESSAGE = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=704,
-  serialized_end=753,
+  serialized_start=664,
+  serialized_end=713,
 )
 
 
@@ -429,11 +432,12 @@ _GAMEMESSAGE = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=755,
-  serialized_end=834,
+  serialized_start=715,
+  serialized_end=794,
 )
 
 _PLAYERMESSAGE.fields_by_name['inventory'].message_type = _INVENTORYMESSAGE
@@ -443,7 +447,6 @@ _MAPMESSAGE.fields_by_name['room'].message_type = _ROOMMESSAGE
 _ROOMMESSAGE.fields_by_name['location'].message_type = _LOCATIONMESSAGE
 _ROOMMESSAGE.fields_by_name['adjacencyList'].message_type = _ADJACENCYLISTMESSAGE
 _ROOMMESSAGE.fields_by_name['inventory'].message_type = _INVENTORYMESSAGE
-_ROOMMESSAGE.fields_by_name['playerList'].message_type = _PLAYERLISTMESSAGE
 _PLAYERLISTMESSAGE.fields_by_name['player'].message_type = _PLAYERMESSAGE
 _INVENTORYMESSAGE.fields_by_name['item'].message_type = _ITEMMESSAGE
 _PATHMESSAGE.fields_by_name['location'].message_type = _LOCATIONMESSAGE
