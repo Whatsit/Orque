@@ -5,9 +5,9 @@ message PlayerMessage {
 	required int32 playerId = 1;
 	optional string name = 2;
 	required int32 health = 3;
-	required InventoryMessage inventory = 4;
+	optional InventoryMessage inventory = 4;
 	required LocationMessage location = 5;
-	required PathMessage path = 6;
+	optional PathMessage path = 6;
 	
 }
 
@@ -34,11 +34,10 @@ message RoomMessage {
 
 	required LocationMessage location = 1;
 	required AdjacencyListMessage adjacencyList = 2;
-	required InventoryMessage inventory = 3;
+	optional InventoryMessage inventory = 3;
 	required int32 type = 4;
 	optional string puzzle = 5;
 	optional string solution = 6;
-	required PlayerListMessage playerList = 7;
 
 }
 

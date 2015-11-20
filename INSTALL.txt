@@ -1,10 +1,19 @@
 This file contains information about building and installing
 the python code of Orque.
 
-1. Install python
+1. Install Python
    a) Go to www.python.org/downloads
-   b) Download the python 3.5.0
+   b) Download Python 3.5.0
    c) Run the default installation
 2. Download the sorce code of Orque from the github
 3. Open a command window in the Orque folder
 4. Input 'python orque.py' to run Orque
+
+--- Note for Google Protocol Buffers ---
+
+In order to run the version of Orque in the 'protoBuffer' folder of the repository
+which utilizes the Google Protocol Buffer, you will need to install them on your machine,
+as well as set up the Python implementation which can be found in the 'python' folder
+of the google/protobuf repository. Use the READMEs to guide your installation. Also note
+that the Google Protocol Buffers in the Google repository are only compatible with 
+Python 2 (version 2.6 or newer).
