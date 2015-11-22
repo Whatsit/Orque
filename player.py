@@ -10,7 +10,7 @@ import sys
 from threading import Timer, Thread
 from map import Map
 from room import Room
-from random import randint
+from random import randint, choice
 
 """Dictionaries for movement directions:
 """
@@ -385,18 +385,19 @@ def attemptPuzzle():
 	puzzleThread = Thread(target=startPuzzle)
 	puzzleThread.daemon = True
 	puzzleThread.start()
-	puzzleThread.join(1)
+	puzzleThread.join(10)
 	if playerAnswer is None:
 		print("\nToo slow my friend, you're dead!\nPress enter to continue")
-		timeOut = True
+		timeOut = true
 
 playerAnswer = None
 timeOut = False
+questionDict = {"1+1= ": '2', "2+2= ": '4', "3+3= ": '6', "4+4= ": '8', "5+5= ": '10', "6+6= ": '12'}
 def startPuzzle():
 	global playerAnswer
 	global timeOut
-	question = "1+1= "
-	realAnswer = 2
+	question = choice(list(questionDict.keys()))
+	realAnswer = questionDict[question]
 	playerAnswer = input(question)
 	if timeOut == False:
 		if playerAnswer == str(realAnswer):
