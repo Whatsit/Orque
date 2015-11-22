@@ -10,7 +10,12 @@ import sys
 from threading import Timer, Thread
 from map import Map
 from room import Room
+<<<<<<< HEAD
+from random import randint
+from Attack import attack
+=======
 from random import randint, choice, seed
+>>>>>>> master
 
 """Dictionaries for movement directions:
 """
@@ -26,10 +31,11 @@ PossibleSearches = ['search','find','explore','examine']
 PossibleInventories = ['inventory','backpack','items','found']
 PossibleGet = ['get','take','steal','grab']
 PossibleUse = ['use']
+PossibleAttack = ['attack','fight','charge','hit','punch','kick']
 
 class Player:
 	"""Player class
-	
+
 	Attributes:
 	playerID (int) - id
 	name (string) - player name. defaults to "default"
@@ -40,44 +46,58 @@ class Player:
 	"""
 	def __init__(self, id):
 		""" Default Constructor
-		
-		Parameters: 
+
+		Parameters:
 		id (int) - player id
 		"""
 		self.playerId = id
 		self.name = "Default"
-		self.health = 1
+		self.health = 10
+		self.attackRange = [0,3]
 		self.inventory = []
 		self.location = randomCoord()
 		self.command = ""
 		self.playerPath = [self.location]
 		config.map.layout[self.location[0]][self.location[1]].playerList.append(self)
 
+	def playerAttack(self):
+		if(len(config.map.layout[self.location[0]][self.location[1]].playerList) == 1):
+			print("You flail at the air vilently... ( -1 PRIDE )")
+		elif(len(config.map.layout[self.location[0]][self.location[1]].playerList) == 2):
+			print("You Attack the person before you ( attack not done )")
+			for p in config.map.layout[self.location[0]][self.location[1]].playerList:
+				if(p != self):
+					print("Winner :: " + str(attack(self, self, p)))
+		else:
+			print("Do to the packed confines, you trip over the other people in the room... ( -1 HEALTH )")
+			self.health = self.health - 1
+
+
 	def addItem(self, item):
-		"""addItem() 
+		"""addItem()
 		adds item to player inventory list.
-		
-		Parameters: 
+
+		Parameters:
 		item (item) - item to add
 		"""
 		self.inventory.append(item)
 
 	def removeItem(self, item):
-		""" removeItem() 
-		
+		""" removeItem()
+
 		removes item to inventory list
-		
+
 		Peramiters:
-		
+
 		item (item) - item to remove
 		"""
 		self.inventory.remove(item)
 
 	def updateCom(self, string):
-		""" updateItem() 
-		
+		""" updateItem()
+
 		sets player command as string.
-		
+
 		Parameters:
 		string (string) - command
 		"""
@@ -96,9 +116,9 @@ class Player:
 
 	def hasItemByName(self, itemName):
 		""" hasItemByName()
-		
+
 		returns true or false if player has itemName in inventory.
-		
+
 		Parameters:
 		itemName (string) - item name to search
 		"""
@@ -107,13 +127,13 @@ class Player:
 			if item.name == itemName:
 				return True
 		return False
-	
+
 	def useItem(self, itemName, dir):
-		""" useItem() 
-		
+		""" useItem()
+
 		determines if player can use item on door
 		if so moves player through door.
-		
+
 		Parameters:
 		itemName (string) - item to use
 		dir (int) - direction to move
@@ -144,11 +164,11 @@ class Player:
 				if config.map.layout[self.location[0]][self.location[1]].roomType == 1:
 					attemptPuzzle()
 			else:
-				return "There is no item called %s in your inventory" % itemName 
-	
+				return "There is no item called %s in your inventory" % itemName
+
 	def search(self):
 		""" search()
-		
+
 		seaches current room for items that can be picked up.
 		"""
 		items = ""
@@ -163,9 +183,9 @@ class Player:
 
 	def parseCommand(self):
 		""" parseCommand()
-		
+
 		parses command and calls corresponding action function.
-		
+
 		Example inputs:
 			I want to move right
 			I want to move left
@@ -178,6 +198,7 @@ class Player:
 			backpack						( display inventory)
 			down search move left 			(this input moves you down, more restrictions?)
 			up dasioda dwjdnad adonad		(this moves you up, more restrictions?)
+			attack							(will attack other player in room)
 		"""
 
 
@@ -233,13 +254,17 @@ class Player:
 					return self.useItem(cmd[i+1], None)
 				i = len(cmd)
 				break
+			elif s in PossibleAttack:
+				return self.playerAttack()
+				i = len(cmd)
+				break
 			#no valid commands were found
 			elif i == len(cmd)-1:
 				return "Please input valid command"
 
 	def getItem(self, itemName):
-		"""getItem() 
-		
+		"""getItem()
+
 		Picks up key from room(temporary)
 		"""
 		curRoom = config.map.layout[self.location[0]][self.location[1]]
@@ -253,9 +278,9 @@ class Player:
 				self.printInventory()
 			else:
 				return "There is no item called %s to get from this room" % itemName
-	
+
 	def printInventory(self):
-		"""printInventory() 
+		"""printInventory()
 		prints items in inventory.
 		"""
 		items = ""
@@ -267,13 +292,13 @@ class Player:
 			return "There are no items in your inventory"
 		else:
 			return "The following items are in your inventory: %s" % items
-	
+
 	def move(self, dir, flag):
-		""" move() 
-		
+		""" move()
+
 		handles move action. if calling functions has determined that player can move,
 		moves player to room in given direction.
-		
+
 		Parameters:
 		dir () - direction to move
 		flag () - flag var
@@ -370,15 +395,15 @@ class Player:
 		return output
 
 def randomCoord():
-	"""randomCoord 
+	"""randomCoord
 	returns random coordinate on map.
-	
+
 	Return: (list[int][int]) - coordinates
 	"""
 	return [randint(0,config.ROWS-1), randint(0,config.COLS-1)]
 
 def attemptPuzzle():
-	global timeOut 
+	global timeOut
 	global playerAnswer
 	timeOut = False
 	playerAnswer = None
