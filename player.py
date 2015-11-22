@@ -10,8 +10,12 @@ import sys
 from threading import Timer, Thread
 from map import Map
 from room import Room
+<<<<<<< HEAD
 from random import randint
 from Attack import attack
+=======
+from random import randint, choice, seed
+>>>>>>> master
 
 """Dictionaries for movement directions:
 """
@@ -406,18 +410,46 @@ def attemptPuzzle():
 	puzzleThread = Thread(target=startPuzzle)
 	puzzleThread.daemon = True
 	puzzleThread.start()
-	puzzleThread.join(1)
+	puzzleThread.join(10)
 	if playerAnswer is None:
 		print("\nToo slow my friend, you're dead!\nPress enter to continue")
 		timeOut = True
 
 playerAnswer = None
 timeOut = False
+
+def generateQuestions():
+	ops = ['+', '-', '*', '/', '%']
+	# Generate ints for lhs and rhs of question and operator
+	seed
+	lhs = randint(2,16)
+	rhs = randint(2,16)
+	cOps = choice(ops)
+	# Choose an operator and generate answer
+	if cOps == '+':
+		lhs = lhs * randint(2,4)
+		rhs = rhs * randint(1,5)
+		answer = lhs + rhs
+	elif cOps == '-':
+		lhs = lhs * randint(2,4)
+		rhs = rhs * randint(1,5)
+		answer = lhs - rhs
+	elif cOps == '/':
+		lhs = lhs * randint(2,10)
+		answer = int(lhs / rhs)
+	elif cOps == '%':
+		lhs = lhs * randint(2,10)
+		answer = lhs % rhs
+	else:
+		answer = lhs * rhs
+	# Convert lhs, ops, rhs into a question string
+	questionString = str(lhs) + cOps + str(rhs) + '= '
+	return questionString, str(answer)
+
 def startPuzzle():
 	global playerAnswer
 	global timeOut
-	question = "1+1= "
-	realAnswer = 2
+	question, realAnswer = generateQuestions()
 	playerAnswer = input(question)
 	if timeOut == False:
 		if playerAnswer == str(realAnswer):

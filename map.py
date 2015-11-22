@@ -139,14 +139,14 @@ class Map:
 					if self.layout[i][j].adjacencyList[0] == 1:
 						topLine += " | "
 					elif self.layout[i][j].adjacencyList[0] == 2:
-						topLine += colored(" | ", "red")
+						topLine += colored(" | ", "blue")
 					else:
 						topLine += "   "
 					#""" Mid line West """
 					if self.layout[i][j].adjacencyList[3] == 1:
 						midLine += "-"
 					elif self.layout[i][j].adjacencyList[3] == 2:
-						midLine += colored("-", "red")
+						midLine += colored("-", "blue")
 					else:
 						midLine += " "
 					#""" Mid line Room """
@@ -157,21 +157,21 @@ class Map:
 							midLine += colored("N", "red")
 					else:
 						if not self.layout[i][j].playerList:
-							midLine += "P"
-						else:
 							midLine += colored("P", "blue")
+						else:
+							midLine += colored("P", "white")
 					#""" Mid line East """
 					if self.layout[i][j].adjacencyList[1] == 1:
 						midLine += "-"
 					elif self.layout[i][j].adjacencyList[1] == 2:
-						midLine += colored("-", "red")
+						midLine += colored("-", "blue")
 					else:
 						midLine += " "
 					#""" Bot line South """
 					if self.layout[i][j].adjacencyList[2] == 1:
 						botLine += " | "
 					elif self.layout[i][j].adjacencyList[2] == 2:
-						botLine += colored(" | ", "red")
+						botLine += colored(" | ", "blue")
 					else:
 						botLine += "   "
 				#""" if player has not visited location leave it blank """
