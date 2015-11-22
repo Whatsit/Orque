@@ -10,7 +10,7 @@ import sys
 from threading import Timer, Thread
 from map import Map
 from room import Room
-from random import randint, choice
+from random import randint, choice, seed
 
 """Dictionaries for movement directions:
 """
@@ -394,16 +394,27 @@ playerAnswer = None
 timeOut = False
 
 def generateQuestions():
-	ops = ['+', '-', '*']
+	ops = ['+', '-', '*', '/', '%']
 	# Generate ints for lhs and rhs of question and operator
+	seed
 	lhs = randint(2,16)
 	rhs = randint(2,16)
 	cOps = choice(ops)
 	# Choose an operator and generate answer
 	if cOps == '+':
+		lhs = lhs * randint(2,4)
+		rhs = rhs * randint(1,5)
 		answer = lhs + rhs
 	elif cOps == '-':
+		lhs = lhs * randint(2,4)
+		rhs = rhs * randint(1,5)
 		answer = lhs - rhs
+	elif cOps == '/':
+		lhs = lhs * randint(2,10)
+		answer = int(lhs / rhs)
+	elif cOps == '%':
+		lhs = lhs * randint(2,10)
+		answer = lhs % rhs
 	else:
 		answer = lhs * rhs
 	# Convert lhs, ops, rhs into a question string
