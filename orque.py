@@ -52,6 +52,7 @@ while True:
 		config.map.printMap(config.pL[p].playerId)
 		if(len(config.map.layout[config.pL[p].location[0]][config.pL[p].location[1]].playerList) > 1):
 			print("WARNING :: There is another player in the room!!!")
+			
 		config.pL[p].command = input("Input command: ")
 		if config.pL[p].command == "exit":
 			sys.exit()
