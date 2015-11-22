@@ -9,6 +9,8 @@ class PlayerTestCase(unittest.TestCase):
 	def assert_location_equal(self, p, location):
 		self.assertEqual(p.location, location)
 
+<<<<<<< HEAD
+=======
 	def assert_search_string_equal(self, p, string):
 		self.assertEqual(p.search(), string)
 
@@ -18,6 +20,7 @@ class PlayerTestCase(unittest.TestCase):
 	def assert_use_item_string_equal(self, p, string):
 		self.assertEqual(p.useItem('key',2), string)
 
+>>>>>>> master
 class PlayerTest(PlayerTestCase):
 	def test_move_into_wall(self):
 		config.map = Map()
@@ -53,51 +56,20 @@ class PlayerTest(PlayerTestCase):
 		p.move(2,False)
 		self.assert_location_equal(p, [1,0])
 
-	def test_search_empty_room(self):
-		config.map = Map()
-		config.map.randomConnectedMap()
-		p = Player(0)
-		p.location = [0,0]
-		config.pL.append(p)
-		self.assert_search_string_equal(p, "There are no items in the room")
+	def search_empty_room(self):
+		pass
 
-	def test_search_room_with_item(self):
-		config.map = Map()
-		config.map.randomConnectedMap()
-		p = Player(0)
-		p.location = [0,0]
-		config.pL.append(p)
-		key = Item(1,"key")
-		config.map.layout[config.pL[0].location[0]][config.pL[0].location[1]].itemList.append(key)
-		self.assert_search_string_equal(p, "The following items are in the room: key")
+	def search_room_with_item(self):
+		pass
 
-	def test_get_item_from_empty_room(self):
-		config.map = Map()
-		config.map.randomConnectedMap()
-		p = Player(0)
-		p.location = [0,0]
-		config.pL.append(p)
-		self.assert_get_item_string_equal(p, "There is no item to get from this room")
+	def get_item_from_empty_room(self):
+		pass
 
-	def test_get_item_from_room_with_item(self):
-		config.map = Map()
-		config.map.randomConnectedMap()
-		p = Player(0)
-		p.location = [0,0]
-		config.pL.append(p)
-		key = Item(1,"key")
-		config.map.layout[config.pL[0].location[0]][config.pL[0].location[1]].itemList.append(key)
-		self.assert_get_item_string_equal(p, "You picked up an item: key")
+	def get_item_from_room_with_item(self):
+		pass
 
-	def test_get_wrong_item_from_room_with_item(self):
-		config.map = Map()
-		config.map.randomConnectedMap()
-		p = Player(0)
-		p.location = [0,0]
-		config.pL.append(p)
-		key = Item(1,"poop")
-		config.map.layout[config.pL[0].location[0]][config.pL[0].location[1]].itemList.append(key)
-		self.assert_get_item_string_equal(p, "There is no item called key to get from this room")
+	def use_item_with_empty_inventory(self):
+		pass
 
 	def test_use_item_on_door(self):
 		config.map = Map()
@@ -125,5 +97,11 @@ class PlayerTest(PlayerTestCase):
 		p.location = [0,0]
 		config.map.layout[0][0].playerList.append(p)
 		config.pL.append(p)
+<<<<<<< HEAD
+		p.useItem("key",2)
+		p.move(2,False)
+		self.assert_location_equal(p, [0,0])
+=======
 		self.assert_use_item_string_equal(p, "Inventory is empty")
 
+>>>>>>> master
