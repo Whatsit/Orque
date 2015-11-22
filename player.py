@@ -388,16 +388,32 @@ def attemptPuzzle():
 	puzzleThread.join(10)
 	if playerAnswer is None:
 		print("\nToo slow my friend, you're dead!\nPress enter to continue")
-		timeOut = true
+		timeOut = True
 
 playerAnswer = None
 timeOut = False
-questionDict = {"1+1= ": '2', "2+2= ": '4', "3+3= ": '6', "4+4= ": '8', "5+5= ": '10', "6+6= ": '12'}
+
+def generateQuestions():
+	ops = ['+', '-', '*']
+	# Generate ints for lhs and rhs of question and operator
+	lhs = randint(2,16)
+	rhs = randint(2,16)
+	cOps = choice(ops)
+	# Choose an operator and generate answer
+	if cOps == '+':
+		answer = lhs + rhs
+	elif cOps == '-':
+		answer = lhs - rhs
+	else:
+		answer = lhs * rhs
+	# Convert lhs, ops, rhs into a question string
+	questionString = str(lhs) + cOps + str(rhs) + '= '
+	return questionString, str(answer)
+
 def startPuzzle():
 	global playerAnswer
 	global timeOut
-	question = choice(list(questionDict.keys()))
-	realAnswer = questionDict[question]
+	question, realAnswer = generateQuestions()
 	playerAnswer = input(question)
 	if timeOut == False:
 		if playerAnswer == str(realAnswer):
