@@ -10,12 +10,8 @@ import sys
 from threading import Timer, Thread
 from map import Map
 from room import Room
-<<<<<<< HEAD
-from random import randint
 from Attack import attack
-=======
 from random import randint, choice, seed
->>>>>>> master
 
 """Dictionaries for movement directions:
 """
@@ -421,7 +417,7 @@ timeOut = False
 def generateQuestions():
 	ops = ['+', '-', '*', '/', '%']
 	# Generate ints for lhs and rhs of question and operator
-	seed
+	seed()
 	lhs = randint(2,16)
 	rhs = randint(2,16)
 	cOps = choice(ops)
