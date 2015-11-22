@@ -3,7 +3,7 @@
 Main module to run orque.
 
 IMPORTANT NOTE:
-	- For config.map.layout[x][y] 
+	- For config.map.layout[x][y]
 		* Something went wrong and (x,y) does signify a Cartesian (x,y) coord,
 		  instead x is the row and y is the column
 		* Therefore config.map.layout[x][y] is equivalent to Cartesian (y,x) coord
@@ -48,6 +48,8 @@ while True:
 	for p in range(len(config.pL)):
 		print("Player ", p)
 		config.map.printMap(config.pL[p].playerId)
+		if(len(config.map.layout[config.pL[p].location[0]][config.pL[p].location[1]].playerList) > 1):
+			print("WARNING :: There is another player in the room!!!")
 		config.pL[p].command = input("Input command: ")
 		if config.pL[p].command == "exit":
 			sys.exit()
