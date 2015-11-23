@@ -18,6 +18,7 @@ from room import Room
 from map import Map
 from item import Item
 from ui import UI
+from random import randint, seed, choice
 
 timer = 0
 
@@ -46,11 +47,25 @@ for p in config.pL:
 
 #config.map.layout[0][0].playerList.append(config.pL[0])
 
-""" Spawn key """
-key = Item(1,"key","key")
+""" Spawn items """
+itemContainer = [['Rusty_Knife','weapon'], ['Old_Hardhat','armor'], 
+				 ['Green_Liquid_In_A_Jar', 'potion'], ['key', 'key']]
+
+for i in range(0,10):
+	seed()
+	cItem = choice(itemContainer)
+	item = Item(i,cItem[0],cItem[1])
+	xPos = randint(0,config.ROWS-1)
+	yPos = randint(0,config.COLS-1)
+	# Make sure items do not spawn in puzzle room
+	while config.map.layout[xPos][yPos].roomType == 1:
+		xPos = randint(0,config.ROWS-1)
+		yPos = randint(0,config.COLS-1)
+	config.map.layout[xPos][yPos].itemList.append(item)
+	print(item.name, xPos, yPos)
+
+key = Item(11,"key")
 config.map.layout[config.pL[0].location[0]][config.pL[0].location[1]].itemList.append(key)
-#key = Item(2,"key")
-#config.map.layout[config.pL[1].location[0]][config.pL[1].location[1]].itemList.append(key)
 #print(config.map.layout[1][0].itemList[0].name)
 
 """ Initial map """
