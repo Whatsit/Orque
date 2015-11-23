@@ -19,11 +19,12 @@ else:
 	while True:
 		command = input("Input Command: ")
 
-		client.send(command.encode())	
-		if(command == 'exit'):
-			break;
-		else:
-			print(client.recv(1024).decode())
+		if(command):
+			client.send(command.encode())	
+			if(command == 'exit'):
+				break;
+			else:
+				print(client.recv(1024).decode())
 		
 	client.close()	
 	print('goodbye')
