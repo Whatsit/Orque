@@ -10,7 +10,11 @@ import sys
 from threading import Timer, Thread
 from map import Map
 from room import Room
+<<<<<<< HEAD
 from item import Item
+=======
+from random import randint
+>>>>>>> refs/remotes/Whatsit/master
 from Attack import attack
 from random import randint, choice, seed
 
