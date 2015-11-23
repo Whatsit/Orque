@@ -419,6 +419,7 @@ class Player:
 				self.puzzleReward()
 			else:
 				print("Were you dropped as a baby? Welp, doesnt matter now, you're dead!")
+				#ToDo: Kill the player, temp teleported
 
 	def puzzleReward(self):
 		reward = Item(11,'reward')  #ToDo: A real reward
