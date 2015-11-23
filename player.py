@@ -10,11 +10,7 @@ import sys
 from threading import Timer, Thread
 from map import Map
 from room import Room
-<<<<<<< HEAD
 from item import Item
-=======
-from random import randint
->>>>>>> refs/remotes/Whatsit/master
 from Attack import attack
 from random import randint, choice, seed
 
@@ -452,7 +448,7 @@ class Player:
 				self.puzzleReward()
 			else:
 				print("Were you dropped as a baby? Welp, doesnt matter now, you're dead!")
-				#ToDo: Kill the player, temp teleported
+				#ToDo: Kill the player
 
 	def puzzleReward(self):
 		reward = Item(11,'reward')  #ToDo: A real reward
