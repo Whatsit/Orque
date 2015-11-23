@@ -47,12 +47,14 @@ for p in config.pL:
 
 #config.map.layout[0][0].playerList.append(config.pL[0])
 
-""" Spawn key """
-<<<<<<< HEAD
-itemContainer = ['key', 'knife', 'armor']
+""" Spawn items """
+itemContainer = [['Rusty_Knife','weapon'], ['Old_Hardhat','armor'], 
+				 ['Green_Liquid_In_A_Jar', 'potion'], ['key', 'key']]
+
 for i in range(0,10):
 	seed()
-	item = Item(i,choice(itemContainer))
+	cItem = choice(itemContainer)
+	item = Item(i,cItem[0],cItem[1])
 	xPos = randint(0,config.ROWS-1)
 	yPos = randint(0,config.COLS-1)
 	# Make sure items do not spawn in puzzle room
@@ -63,9 +65,6 @@ for i in range(0,10):
 	print(item.name, xPos, yPos)
 
 key = Item(11,"key")
-=======
-key = Item(1,"key","key")
->>>>>>> refs/remotes/Whatsit/master
 config.map.layout[config.pL[0].location[0]][config.pL[0].location[1]].itemList.append(key)
 #print(config.map.layout[1][0].itemList[0].name)
 

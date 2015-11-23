@@ -11,7 +11,7 @@ class Item(object):
 	* id (int) - id of item
 	* name (string) - name of item
 	"""
-	def __init__(self, id, name, t):
+	def __init__(self, id, name, t = 'None'):
 		#Item constructor
 		self.id = id
 		self.name = name
