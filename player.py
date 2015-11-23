@@ -10,7 +10,7 @@ import sys
 from threading import Timer, Thread
 from map import Map
 from room import Room
-from random import randint
+from item import Item
 from Attack import attack
 from random import randint, choice, seed
 
@@ -182,7 +182,7 @@ class Player:
 						else:
 							return "Invalid direction parameter"
 				if config.map.layout[self.location[0]][self.location[1]].roomType == 1:
-					attemptPuzzle()
+					self.attemptPuzzle()
 			else:
 				return "There is no item called %s in your inventory" % itemName
 
@@ -222,7 +222,7 @@ class Player:
 		"""
 
 
-		cmd = self.command.split(" ")
+		cmd = self.command.split(" ", maxsplit = 1)
 
 		for i in range(0, len(cmd)):
 			s = cmd[i]
@@ -264,7 +264,10 @@ class Player:
 				i = len(cmd)
 				break
 			elif s in PossibleGet:
-				return self.getItem(cmd[i+1])
+				if len(cmd) == 1:
+					print('Please input item name')
+				else:
+					return self.getItem(cmd[i+1])
 				i = len(cmd)
 				break
 			elif s in PossibleUse:
@@ -419,34 +422,52 @@ class Player:
 		#config.map.printMap(self.playerId)
 		return output
 
-def randomCoord():
-	"""randomCoord
-	returns random coordinate on map.
 
-	Return: (list[int][int]) - coordinates
-	"""
-	return [randint(0,config.ROWS-1), randint(0,config.COLS-1)]
-
-def attemptPuzzle():
-	global timeOut
-	global playerAnswer
-	timeOut = False
 	playerAnswer = None
-	puzzleThread = Thread(target=startPuzzle)
-	puzzleThread.daemon = True
-	puzzleThread.start()
-	puzzleThread.join(10)
-	if playerAnswer is None:
-		print("\nToo slow my friend, you're dead!\nPress enter to continue")
-		timeOut = True
+	timeOut = False
 
-playerAnswer = None
-timeOut = False
+	def attemptPuzzle(self):
+		global timeOut
+		global playerAnswer
+		timeOut = False
+		playerAnswer = None
+		puzzleThread = Thread(target=self.startPuzzle)
+		puzzleThread.daemon = True
+		puzzleThread.start()
+		puzzleThread.join(10)
+		if playerAnswer is None:
+			print("\nToo slow my friend, you're dead!\nPress enter to continue")
+			timeOut = True
+
+	def startPuzzle(self):
+		global playerAnswer
+		global timeOut
+		question, realAnswer = generateQuestions()
+		playerAnswer = input(question)
+		if timeOut == False:
+			if playerAnswer == str(realAnswer):
+				print("How clever, you're correct!")
+				self.puzzleReward()
+			else:
+				print("Were you dropped as a baby? Welp, doesnt matter now, you're dead!")
+				#ToDo: Kill the player, temp: Randomly teleport player
+				config.map.layout[self.location[0]][self.location[1]].playerList.remove(self)
+				self.location = randomCoord()
+				while config.map.layout[self.location[0]][self.location[1]].roomType == 1:
+					self.location = randomCoord()
+				self.playerPath.append(self.location)
+				config.map.layout[self.location[0]][self.location[1]].playerList.append(self)
+				config.map.printMap(self.playerId)
+
+	def puzzleReward(self):
+		reward = Item(11,'reward')  #ToDo: A real reward
+		print("You have won a %s." % reward.name)
+		self.addItem(reward)
 
 def generateQuestions():
 	ops = ['+', '-', '*', '/', '%']
 	# Generate ints for lhs and rhs of question and operator
-	seed
+	seed()
 	lhs = randint(2,16)
 	rhs = randint(2,16)
 	cOps = choice(ops)
@@ -471,13 +492,13 @@ def generateQuestions():
 	questionString = str(lhs) + cOps + str(rhs) + '= '
 	return questionString, str(answer)
 
-def startPuzzle():
-	global playerAnswer
-	global timeOut
-	question, realAnswer = generateQuestions()
-	playerAnswer = input(question)
-	if timeOut == False:
-		if playerAnswer == str(realAnswer):
-			print("How clever, you're correct!")
-		else:
-			print("Were you dropped as a baby? Welp, doesnt matter now, you're dead!")
+def randomCoord():
+	"""randomCoord
+	returns random coordinate on map.
+
+	Return: (list[int][int]) - coordinates
+	"""
+	seed()
+	return [randint(0,config.ROWS-1), randint(0,config.COLS-1)]
+
+
