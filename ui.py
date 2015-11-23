@@ -38,7 +38,7 @@ class UI:
 		self.textField.config(yscrollcommand=self.scrollbar.set)
 		self.textField.insert(END, self.output)
 		# Text field for map
-		self.mapField = Text(root, height=config.ROWS+2*(config.ROWS), width=config.COLS+2*(config.COLS))
+		self.mapField = Text(root, height=config.ROWS*3, width=config.COLS*3)
 		self.mapField.pack(side=BOTTOM, fill=Y)
 		# Text field for map legend
 		self.mapLegend = Listbox(root, width=36)
