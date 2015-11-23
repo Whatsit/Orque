@@ -10,12 +10,9 @@ import sys
 from threading import Timer, Thread
 from map import Map
 from room import Room
-<<<<<<< HEAD
 from random import randint
 from Attack import attack
-=======
 from random import randint, choice, seed
->>>>>>> master
 
 """Dictionaries for movement directions:
 """
@@ -32,6 +29,7 @@ PossibleInventories = ['inventory','backpack','items','found']
 PossibleGet = ['get','take','steal','grab']
 PossibleUse = ['use']
 PossibleAttack = ['attack','fight','charge','hit','punch','kick']
+PossibleEquip = ['equip']
 
 class Player:
 	"""Player class
@@ -46,7 +44,6 @@ class Player:
 	"""
 	def __init__(self, id):
 		""" Default Constructor
-
 		Parameters:
 		id (int) - player id
 		"""
@@ -54,7 +51,11 @@ class Player:
 		self.name = "Default"
 		self.health = 10
 		self.attackRange = [0,3]
+		self.protection = 0
+		self.attackBonus = 0
 		self.inventory = []
+		self.outfit = None
+		self.weapon = None
 		self.location = randomCoord()
 		self.command = ""
 		self.playerPath = [self.location]
@@ -72,6 +73,25 @@ class Player:
 			print("Do to the packed confines, you trip over the other people in the room... ( -1 HEALTH )")
 			self.health = self.health - 1
 
+	def equipItem(self, itemName):
+		if self.hasItemByName(itemName):
+			item = None
+			for i in self.inventory:
+				if i.name == itemName:
+					item = i
+					break
+			if item.itemType == "armor":
+				self.outfit = item
+				self.protection = item.effects["armor"]
+				return "Armor Equipt :: ProtectionBonus: " + str(self.protection)
+			elif item.itemType == "weapon":
+				self.weapen = item
+				self.attackBonus = item.effects["weapon"]
+				return "Weapon Equipt :: AttackBonus: " + str(self.attackBonus)
+			else:
+				return "Can't equip this type"
+		else:
+			return "No such equipment in inventory"
 
 	def addItem(self, item):
 		"""addItem()
@@ -258,6 +278,11 @@ class Player:
 				return self.playerAttack()
 				i = len(cmd)
 				break
+			elif s in PossibleEquip:
+				if len(cmd) > 1:
+					return self.equipItem(cmd[i+1])
+				i = len(cmd)
+				break
 			#no valid commands were found
 			elif i == len(cmd)-1:
 				return "Please input valid command"
@@ -285,7 +310,7 @@ class Player:
 		"""
 		items = ""
 		for i in self.inventory:
-			items += i.name + ", "
+			items += " | " + i.itemType + " : " + i.name + ", "
 		items = items[:-2]
 
 		if items == "":
