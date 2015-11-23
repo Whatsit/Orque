@@ -46,12 +46,13 @@ for i in range(0,10):
 		yPos = randint(0,config.COLS-1)
 	config.map.layout[xPos][yPos].itemList.append(item)
 	print(item.name, xPos, yPos)
-#key = Item(2,"key")
-#config.map.layout[config.pL[1].location[0]][config.pL[1].location[1]].itemList.append(key)
+
+key = Item(11,"key")
+config.map.layout[config.pL[0].location[0]][config.pL[0].location[1]].itemList.append(key)
 #print(config.map.layout[1][0].itemList[0].name)
 
 """ Initial map """
-#config.map.printMap(0,1)
+config.map.printMap(0,1)
 
 #UI test
 #ui = UI()
