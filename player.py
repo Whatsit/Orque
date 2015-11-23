@@ -44,7 +44,6 @@ class Player:
 	"""
 	def __init__(self, id):
 		""" Default Constructor
-
 		Parameters:
 		id (int) - player id
 		"""
