@@ -222,7 +222,7 @@ class Player:
 		"""
 
 
-		cmd = self.command.split(" ")
+		cmd = self.command.split(" ", maxsplit = 1)
 
 		for i in range(0, len(cmd)):
 			s = cmd[i]
@@ -264,7 +264,10 @@ class Player:
 				i = len(cmd)
 				break
 			elif s in PossibleGet:
-				return self.getItem(cmd[i+1])
+				if len(cmd) == 1:
+					print('Please input item name')
+				else:
+					return self.getItem(cmd[i+1])
 				i = len(cmd)
 				break
 			elif s in PossibleUse:
