@@ -34,11 +34,11 @@ for p in range(0,1):
 
 """	Give players weapen and armor """
 for p in config.pL:
-	weapon = Item(2,"Rusty_Knife","weapon")
+	weapon = Item(2,"Rusty Knife","weapon")
 	weapon.effects["weapon"] = 2
-	armor = Item(3,"Old_Hardhat","armor")
+	armor = Item(3,"Old Hardhat","armor")
 	armor.effects["armor"] = 2
-	potion = Item(4,"Green_Liquid_In_A_Jar","potion")
+	potion = Item(4,"Green Liquid In A Jar","potion")
 	potion.effects["health"] = 10
 	p.inventory.append(weapon)
 	p.inventory.append(armor)
@@ -48,8 +48,8 @@ for p in config.pL:
 #config.map.layout[0][0].playerList.append(config.pL[0])
 
 """ Spawn items """
-itemContainer = [['Rusty_Knife','weapon'], ['Old_Hardhat','armor'], 
-				 ['Green_Liquid_In_A_Jar', 'potion'], ['key', 'key']]
+itemContainer = [['Rusty Knife','weapon'], ['Old Hardhat','armor'], 
+				 ['Green Liquid In A Jar', 'potion'], ['key', 'key']]
 
 for i in range(0,10):
 	seed()
