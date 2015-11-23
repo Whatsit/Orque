@@ -447,7 +447,14 @@ class Player:
 				self.puzzleReward()
 			else:
 				print("Were you dropped as a baby? Welp, doesnt matter now, you're dead!")
-				#ToDo: Kill the player
+				#ToDo: Kill the player, temp: Randomly teleport player
+				config.map.layout[self.location[0]][self.location[1]].playerList.remove(self)
+				self.location = randomCoord()
+				while config.map.layout[self.location[0]][self.location[1]].roomType == 1:
+					self.location = randomCoord()
+				self.playerPath.append(self.location)
+				config.map.layout[self.location[0]][self.location[1]].playerList.append(self)
+				config.map.printMap(self.playerId)
 
 	def puzzleReward(self):
 		reward = Item(11,'reward')  #ToDo: A real reward
@@ -488,6 +495,7 @@ def randomCoord():
 
 	Return: (list[int][int]) - coordinates
 	"""
+	seed()
 	return [randint(0,config.ROWS-1), randint(0,config.COLS-1)]
 
 
