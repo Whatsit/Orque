@@ -10,12 +10,9 @@ import sys
 from threading import Timer, Thread
 from map import Map
 from room import Room
-#<<<<<<< HEAD
 from random import randint
 from Attack import attack
-#=======
 from random import randint, choice, seed
-#>>>>>>> master
 
 """Dictionaries for movement directions:
 """
