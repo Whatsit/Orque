@@ -4,7 +4,7 @@ import sys
 client = socket.socket()
 
 if len(sys.argv) < 1:
-	print ('format: client.py [hostname] [port]')
+	print ('format: client.py [address] [port]')
 else:
 	host = sys.argv[1]
 	port = 8080
@@ -19,11 +19,12 @@ else:
 	while True:
 		command = input("Input Command: ")
 
-		client.send(command.encode())	
-		if(command == 'exit'):
-			break;
-		else:
-			print(client.recv(1024).decode())
+		if(command):
+			client.send(command.encode())	
+			if(command == 'exit'):
+				break;
+			else:
+				print(client.recv(1024).decode())
 		
 	client.close()	
 	print('goodbye')

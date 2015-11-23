@@ -1,24 +1,26 @@
 import socket
-import _thread
 import sys
+from threading import Thread
 
-def handler(connect, address):
+def handler(connect, player):
 	while True:
 		#recv client command
 		response = connect.recv(1024).decode()
-		print (address, " : ",response)
-		if not response:
-			break;
-		else:
-			if(response == 'exit'):
-				print (address, 'has rage quit')
+		
+		if(response):
+			if not response:
 				break;
 			else:
-				#process commands
-				res = 'you did: ' + response
-				connect.send(res.encode())
+				print ("Player ", player, " : ",response)
+				if(response == 'exit'):
+					print ("Player ", player, 'has rage quit')
+					break;
+				else:
+					#process commands
+					res = 'you did: ' + response
+					connect.send(res.encode())
 	connect.close()
-
+	
 if __name__ == '__main__':
 	if len(sys.argv) == 1:
 		print("format: python server.py [port]")
@@ -35,14 +37,19 @@ if __name__ == '__main__':
 	print ('server started on port: ', port)
 	server.listen(5)
 
+	playerCount = 0
 	while True:
 		connect, address = server.accept()
 		print('New Connection', address)
+		print(address, "is Player ", playerCount)
 		
 		#send hello
 		msg = 'welcome to orque'
 		connect.send(msg.encode())
 		
-		_thread.start_new_thread(handler,(connect, address))
+		thread = Thread(target=handler, args=(connect, playerCount))
+		thread.start()
+		
+		playerCount += 1
 	server.close()
 
