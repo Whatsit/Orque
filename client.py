@@ -1,16 +1,18 @@
 import socket
 import sys
+import config
 
 client = socket.socket()
 
-if len(sys.argv) < 1:
+if len(sys.argv) < 2:
 	print ('format: client.py [address] [port]')
 else:
 	host = sys.argv[1]
-	port = 8080
-	if sys.argv[2]:
+	port = config.port
+	if len(sys.argv) == 3:
 		port = sys.argv[2]
 
+	print ("Connecting to server: ", host, ":", port)
 	client.connect((host, int(port)))
 
 	#recv hello msg
