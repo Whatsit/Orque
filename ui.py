@@ -20,6 +20,7 @@ class UI:
 
 		frame = Frame(root)
 		frame.pack()
+		root.title("Orque")
 		# Quit button
 		self.button = Button(frame, text="Quit", fg="red", command=frame.quit)
 		self.button.pack(side = LEFT)
@@ -50,6 +51,10 @@ class UI:
 		self.mapLegend.insert(END, "# - Blocked hallway (requires a key)")
 		self.mapLegend.insert(END, "P - Puzzle room")
 		self.mapLegend.insert(END, "@ - Occupied puzzle room")
+		# Stats box
+		self.statsBox = Listbox(root, height = 8, width = 20)
+		self.updateStats()
+		self.statsBox.pack(side=BOTTOM, fill=X)
 		# Key bindings
 		root.bind("<Return>", self.ReturnPressed)
 
@@ -63,11 +68,33 @@ class UI:
 		sets command of player = to what user types in ui form.
 		"""
 		config.pL[0].command = self.form.get()
+		self.form.delete(0, END)
 		self.textField.insert(0, config.pL[0].command)
 		outputString = config.pL[0].parseCommand()
-		self.textField.insert(0, outputString)
+		if '@' in outputString:
+			outputString = outputString.split('@')
+			for string in outputString[::-1]:
+				self.textField.insert(0, string)
+		else:
+			self.textField.insert(0, outputString)
 		self.mapField.delete('1.0', 'end')
 		self.uiPrintMap(0)
+		self.updateStats()
+		
+	def updateStats(self):
+		""" updateStats
+		
+		Updates the stats section of the UI.
+		"""
+		self.statsBox.delete(0, END)
+		self.statsBox.insert(END, "PLAYER STATS")
+		self.statsBox.insert(END, "------------")
+		self.statsBox.insert(END, "Health:  " + str(config.pL[0].health))
+		self.statsBox.insert(END, "Attack Range:  " + str(config.pL[0].attackRange[0]) + " to " + str(config.pL[0].attackRange[1]))
+		self.statsBox.insert(END, "Defense:  " + str(config.pL[0].protection))
+		self.statsBox.insert(END, "Attack Bonus: " + str(config.pL[0].attackBonus))
+		self.statsBox.insert(END, "Outfit:  " + str(config.pL[0].outfit))
+		self.statsBox.insert(END, "Weapon:  " + str(config.pL[0].weapon))
 
 	def ReturnPressed(self, event):
 		self.setCommand()
@@ -75,6 +102,10 @@ class UI:
 		self.form.delete(0, "end")
 
 	def uiPrintMap(self, playerID, type=0):
+		""" uiPrintMap
+		
+		Prints the map to the UI.
+		"""
 		uiMap = ""
 		for i in range(config.ROWS):
 			topLine = ""
