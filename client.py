@@ -17,7 +17,6 @@ else:
 
 	#recv hello msg
 	print(client.recv(1024).decode())
-
 	while True:
 		command = input("Input Command: ")
 

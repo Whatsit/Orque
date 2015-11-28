@@ -24,8 +24,11 @@ def handler(connect, player):
 					break;
 				else:
 					#process commands
-					config.pL[int(player)].command = response
-					res = config.pL[int(player)].parseCommand()
+					config.pL[int(player)].command = str(response)
+					commandOutput = config.pL[int(player)].parseCommand()
+					updatedMap = config.map.printMap(int(player))
+					res = updatedMap + "\n" + commandOutput
+					#print ('result\n', res)
 					connect.send(res.encode())
 	connect.close()
 	
@@ -43,6 +46,7 @@ if __name__ == '__main__':
 	""" Initialize map and rooms """
 	config.map = Map()
 	config.map.randomConnectedMap()
+	print(config.map.printMap(0,1))
 
 	""" Initialize and spawn players """
 	for p in range(0,1):
@@ -77,12 +81,9 @@ if __name__ == '__main__':
 		print(address, "is Player ", playerCount)
 		
 		#send hello
-		msg = 'welcome to orque'
+		msg = 'welcome to orque\nPlayer ' + str(playerCount) + "\n" + config.map.printMap(playerCount)
 		connect.send(msg.encode())
-		
-		tmpPlayer = Player(playerCount)
-		config.pL.append(tmpPlayer)
-		config.map.printMap(0,1)
+		config.pL.append(Player(playerCount))
 		
 		thread = Thread(target=handler, args=(connect, playerCount))
 		thread.start()
