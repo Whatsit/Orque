@@ -28,7 +28,7 @@ config.map = Map()
 config.map.randomConnectedMap()
 
 """ Initialize and spawn players """
-for p in range(0,1):
+for p in range(0,2):
 	tmpPlayer = Player(p)
 	config.pL.append(tmpPlayer)
 
@@ -78,7 +78,7 @@ config.map.printMap(0,1)
 while True:
 	for p in range(len(config.pL)):
 		print("Player ", p)
-		config.map.printMap(config.pL[p].playerId)
+		print(config.map.printMap(config.pL[p].playerId))
 		if(len(config.map.layout[config.pL[p].location[0]][config.pL[p].location[1]].playerList) > 1):
 			print("WARNING :: There is another player in the room!!!")
 
