@@ -29,7 +29,11 @@ config.map = Map()
 config.map.randomConnectedMap()
 
 """ Initialize and spawn players """
+<<<<<<< HEAD
 for p in range(0,3):
+=======
+for p in range(0,2):
+>>>>>>> refs/heads/pr/3
 	tmpPlayer = Player(p)
 	config.pL.append(tmpPlayer)
 
@@ -65,7 +69,7 @@ for i in range(0,10):
 	config.map.layout[xPos][yPos].itemList.append(item)
 	print(item.name, xPos, yPos)
 
-key = Item(11,"key")
+key = Item(11,"key", "key")
 config.map.layout[config.pL[0].location[0]][config.pL[0].location[1]].itemList.append(key)
 #print(config.map.layout[1][0].itemList[0].name)
 
@@ -87,11 +91,18 @@ def removeDeadPlayers():
 		config.pL.pop(r)
 
 while True:
+<<<<<<< HEAD
 	removeDeadPlayers()
 	for p in config.pL:
 		print("Player ", p.playerId)
 		config.map.printMap(p)
 		if(len(config.map.layout[p.location[0]][p.location[1]].playerList) > 1):
+=======
+	for p in range(len(config.pL)):
+		print("Player ", p)
+		print(config.map.printMap(config.pL[p].playerId))
+		if(len(config.map.layout[config.pL[p].location[0]][config.pL[p].location[1]].playerList) > 1):
+>>>>>>> refs/heads/pr/3
 			print("WARNING :: There is another player in the room!!!")
 
 		p.command = input("Input command: ")

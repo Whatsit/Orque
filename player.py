@@ -54,8 +54,8 @@ class Player:
 		self.protection = 0
 		self.attackBonus = 0
 		self.inventory = []
-		self.outfit = None
-		self.weapon = None
+		self.outfit = "None"
+		self.weapon = "None"
 		self.location = randomCoord()
 		self.command = ""
 		self.playerPath = [self.location]
@@ -63,15 +63,16 @@ class Player:
 
 	def playerAttack(self):
 		if(len(config.map.layout[self.location[0]][self.location[1]].playerList) == 1):
-			print("You flail at the air vilently... ( -1 PRIDE )")
+			return "You flail at the air violently... ( -1 PRIDE )"
 		elif(len(config.map.layout[self.location[0]][self.location[1]].playerList) == 2):
-			print("You Attack the person before you ( attack not done )")
+			return "You Attack the person before you ( attack not done )"
 			for p in config.map.layout[self.location[0]][self.location[1]].playerList:
 				if(p != self):
 					print("Winner :: " + str(attack(self, self, p)))
 		else:
-			print("Do to the packed confines, you trip over the other people in the room... ( -1 HEALTH )")
 			self.health = self.health - 1
+			return "Due to the packed confines, you trip over the other people in the room... ( -1 HEALTH )"
+			
 
 	def equipItem(self, itemName):
 		if self.hasItemByName(itemName):
@@ -81,13 +82,13 @@ class Player:
 					item = i
 					break
 			if item.itemType == "armor":
-				self.outfit = item
+				self.outfit = item.name
 				self.protection = item.effects["armor"]
-				return "Armor Equipt :: ProtectionBonus: " + str(self.protection)
+				return "Armor Equipped :: ProtectionBonus: " + str(self.protection)
 			elif item.itemType == "weapon":
-				self.weapen = item
+				self.weapon = item.name
 				self.attackBonus = item.effects["weapon"]
-				return "Weapon Equipt :: AttackBonus: " + str(self.attackBonus)
+				return "Weapon Equipped :: AttackBonus: " + str(self.attackBonus)
 			else:
 				return "Can't equip this type"
 		else:
@@ -313,13 +314,13 @@ class Player:
 		"""
 		items = ""
 		for i in self.inventory:
-			items += " | " + i.itemType + " : " + i.name + ", "
-		items = items[:-2]
+			items += " | " + i.itemType + " : " + i.name + "@"
+		items = items[:-1]
 
 		if items == "":
 			return "There are no items in your inventory"
 		else:
-			return "The following items are in your inventory: %s" % items
+			return "The following items are in your inventory:@%s" % items
 
 	def move(self, dir, flag):
 		""" move()
@@ -335,8 +336,14 @@ class Player:
 		location = self.location
 		newLoc = self.location
 		curRoom = config.map.layout[location[0]][location[1]]
+<<<<<<< HEAD
 		print(curRoom.adjacencyList)
 		config.map.printMap(self)
+=======
+		#print(curRoom.adjacencyList)
+		
+		#print(config.map.printMap(self.playerId))
+>>>>>>> refs/heads/pr/3
 		#move north
 		if dir == 0:
 			check = curRoom.adjacencyList[0]

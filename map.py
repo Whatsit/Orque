@@ -128,6 +128,7 @@ class Map:
 		As the player explores, more lines on the map appear corresponding to the places
 		that the player has been at.
 		"""
+		result = ""
 		for i in range(ROWS):
 			topLine = ""
 			midLine = ""
@@ -136,51 +137,55 @@ class Map:
 				if type == 1 or [i,j] in p.playerPath:
 					#""" Top line North """
 					if self.layout[i][j].adjacencyList[0] == 1:
-						topLine += " | "
+						topLine += "  |  "
 					elif self.layout[i][j].adjacencyList[0] == 2:
-						topLine += colored(" | ", "blue")
+						topLine += "  #  "
 					else:
-						topLine += "   "
+						topLine += "     "
 					#""" Mid line West """
 					if self.layout[i][j].adjacencyList[3] == 1:
 						midLine += "-"
 					elif self.layout[i][j].adjacencyList[3] == 2:
-						midLine += colored("-", "blue")
+						midLine += "#"
 					else:
 						midLine += " "
 					#""" Mid line Room """
 					if self.layout[i][j].roomType == 0:
 						if not self.layout[i][j].playerList:
-							midLine += "N"
+							midLine += "[ ]"
 						else:
-							midLine += colored("N", "red")
+							midLine += "[P]"
 					else:
 						if not self.layout[i][j].playerList:
-							midLine += colored("P", "blue")
+							midLine += "{ }"
 						else:
-							midLine += colored("P", "white")
+							midLine += "{P}"
 					#""" Mid line East """
 					if self.layout[i][j].adjacencyList[1] == 1:
 						midLine += "-"
 					elif self.layout[i][j].adjacencyList[1] == 2:
-						midLine += colored("-", "blue")
+						midLine += "#"
 					else:
 						midLine += " "
 					#""" Bot line South """
 					if self.layout[i][j].adjacencyList[2] == 1:
-						botLine += " | "
+						botLine += "  |  "
 					elif self.layout[i][j].adjacencyList[2] == 2:
-						botLine += colored(" | ", "blue")
+						botLine += "  #  "
 					else:
-						botLine += "   "
+						botLine += "     "
 				#""" if player has not visited location leave it blank """
 				else:
-					topLine += '   '
-					midLine += '   '
-					botLine += '   '
-			print(topLine)
-			print(midLine)
-			print(botLine)
+					topLine += "     "
+					midLine += "     "
+					botLine += "     "
+			#print(topLine)
+			#print(midLine)
+			#print(botLine)
+			result += topLine + "\n"
+			result += midLine + "\n"
+			result += botLine + "\n"
+		return result
 
 	def validateGenRanMap(self,trials):
 		check = None
