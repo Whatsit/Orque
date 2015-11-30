@@ -56,23 +56,22 @@ class Map:
 				if onHold > 0:
 					x = 90
 				else:
-					x = randint(1,100)	#Decide on room type
+					x = randint(1,100)  # Decide on room type
 
 				if x >= 90:
-					#""" checks if room to be added is within 1 space of a puzzle room """
+					# Checks if room to be added is within 1 space of a puzzle room
 					for pRC in tmpPuzzleRoomCoord:
-						#if i == pRC[0]+1 or i == pRC[0]-1 or j == pRC[1]+1 or j == pRC[1]-1:
 						if manhattanDist([i,j],pRC) <= 2:
 							self.addRoom(i,j,Room())
 							boolBreakConstraint = True
 							onHold += 1
 							break
 					if boolBreakConstraint == False:
-						self.addRoom(i,j,Room(1))			#""" Initialize puzzle room """
-						tmpPuzzleRoomCoord.append([i,j])	#""" Temporarily store puzzle room coord in puzzle list ""
+						self.addRoom(i,j,Room(1))  # Initialize puzzle room
+						tmpPuzzleRoomCoord.append([i,j])  # Temporarily store puzzle room coord in puzzle list ""
 						onHold = 0
 				else:
-					self.addRoom(i,j,Room())	#""" Initialize normal room """
+					self.addRoom(i,j,Room())  # Initialize normal room
 
 				# Randomly initialize room adjacencies
 
