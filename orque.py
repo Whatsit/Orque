@@ -19,6 +19,7 @@ from map import Map
 from item import Item
 from ui import UI
 from random import randint, seed, choice
+from time import sleep
 
 timer = 0
 
@@ -81,21 +82,24 @@ def removeDeadPlayers():
 			removeList.append(config.pL.index(p))
 	removeList.reverse()
 	for r in removeList:
+		print('Removed player %d' % r)
+		sleep(5)
 		config.pL.pop(r)
+
 
 while True:
 	removeDeadPlayers()
-	for p in range(len(config.pL)):
-		print("Player ", p)
-		config.map.printMap(config.pL[p].playerId)
-		if(len(config.map.layout[config.pL[p].location[0]][config.pL[p].location[1]].playerList) > 1):
+	for p in config.pL:
+		print("Player ", p.playerId)
+		config.map.printMap(p.playerId)
+		if(len(config.map.layout[p.location[0]][p.location[1]].playerList) > 1):
 			print("WARNING :: There is another player in the room!!!")
 
-		config.pL[p].command = input("Input command: ")
-		if config.pL[p].command == "exit":
+		p.command = input("Input command: ")
+		if p.command == "exit":
 			sys.exit()
 		else:
-			print(config.pL[p].parseCommand())
+			print(p.parseCommand())
 		#config.pL[p].command = input("Press enter to continue: ")
 		#os.system('cls' if os.name == 'nt' else 'clear')
 
