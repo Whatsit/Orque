@@ -28,7 +28,7 @@ config.map = Map()
 config.map.randomConnectedMap()
 
 """ Initialize and spawn players """
-for p in range(0,1):
+for p in range(0,2):
 	tmpPlayer = Player(p)
 	config.pL.append(tmpPlayer)
 
@@ -71,11 +71,20 @@ config.map.layout[config.pL[0].location[0]][config.pL[0].location[1]].itemList.a
 """ Initial map """
 config.map.printMap(0,1)
 
-#UI test
 #ui = UI()
 
+def removeDeadPlayers():
+	print('removing dead players')
+	removeList = []
+	for p in config.pL:
+		if p.health <= 0:
+			removeList.append(config.pL.index(p))
+	removeList.reverse()
+	for r in removeList:
+		config.pL.pop(r)
 
 while True:
+	removeDeadPlayers()
 	for p in range(len(config.pL)):
 		print("Player ", p)
 		config.map.printMap(config.pL[p].playerId)
