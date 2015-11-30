@@ -19,6 +19,7 @@ from map import Map
 from item import Item
 from ui import UI
 from random import randint, seed, choice
+from time import sleep
 
 timer = 0
 
@@ -28,17 +29,17 @@ config.map = Map()
 config.map.randomConnectedMap()
 
 """ Initialize and spawn players """
-for p in range(0,2):
+for p in range(0,3):
 	tmpPlayer = Player(p)
 	config.pL.append(tmpPlayer)
 
 """	Give players weapen and armor """
 for p in config.pL:
-	weapon = Item(2,"Rusty_Knife","weapon")
+	weapon = Item(2,"Rusty Knife","weapon")
 	weapon.effects["weapon"] = 2
-	armor = Item(3,"Old_Hardhat","armor")
+	armor = Item(3,"Old Hardhat","armor")
 	armor.effects["armor"] = 2
-	potion = Item(4,"Green_Liquid_In_A_Jar","potion")
+	potion = Item(4,"Green Liquid In A Jar","potion")
 	potion.effects["health"] = 10
 	p.inventory.append(weapon)
 	p.inventory.append(armor)
@@ -48,8 +49,8 @@ for p in config.pL:
 #config.map.layout[0][0].playerList.append(config.pL[0])
 
 """ Spawn items """
-itemContainer = [['Rusty_Knife','weapon'], ['Old_Hardhat','armor'], 
-				 ['Green_Liquid_In_A_Jar', 'potion'], ['key', 'key']]
+itemContainer = [['Rusty Knife','weapon'], ['Old Hardhat','armor'], 
+				 ['Green Liquid In A Jar', 'potion'], ['key', 'key']]
 
 for i in range(0,10):
 	seed()
@@ -71,22 +72,33 @@ config.map.layout[config.pL[0].location[0]][config.pL[0].location[1]].itemList.a
 """ Initial map """
 config.map.printMap(0,1)
 
-#UI test
 #ui = UI()
 
+def removeDeadPlayers():
+	print('removing dead players')
+	removeList = []
+	for p in config.pL:
+		if p.health <= 0:
+			config.map.layout[p.location[0]][p.location[1]].playerList.remove(p)
+			removeList.append(config.pL.index(p))
+	removeList.reverse()
+	for r in removeList:
+		print('Removed player %d' % r)
+		config.pL.pop(r)
 
 while True:
-	for p in range(len(config.pL)):
-		print("Player ", p)
-		print(config.map.printMap(config.pL[p].playerId))
-		if(len(config.map.layout[config.pL[p].location[0]][config.pL[p].location[1]].playerList) > 1):
+	removeDeadPlayers()
+	for p in config.pL:
+		print("Player ", p.playerId)
+		config.map.printMap(p)
+		if(len(config.map.layout[p.location[0]][p.location[1]].playerList) > 1):
 			print("WARNING :: There is another player in the room!!!")
 
-		config.pL[p].command = input("Input command: ")
-		if config.pL[p].command == "exit":
+		p.command = input("Input command: ")
+		if p.command == "exit":
 			sys.exit()
 		else:
-			print(config.pL[p].parseCommand())
+			print(p.parseCommand())
 		#config.pL[p].command = input("Press enter to continue: ")
 		#os.system('cls' if os.name == 'nt' else 'clear')
 

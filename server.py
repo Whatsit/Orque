@@ -9,7 +9,7 @@ from map import Map
 from item import Item
 from threading import Thread
 
-def handler(connect, player):
+def handler(connect, p):
 	while True:
 		#recv client command
 		response = connect.recv(1024).decode()
@@ -18,15 +18,15 @@ def handler(connect, player):
 			if not response:
 				break;
 			else:
-				print ("Player ", player, " : ",response)
+				print ("Player ", p.playerId, " : ",response)
 				if(response == 'exit'):
-					print ("Player ", player, 'has rage quit')
+					print ("Player ", p.playerId, 'has rage quit')
 					break;
 				else:
 					#process commands
-					config.pL[int(player)].command = str(response)
-					commandOutput = config.pL[int(player)].parseCommand()
-					updatedMap = config.map.printMap(int(player))
+					p.command = str(response)
+					commandOutput = p.parseCommand()
+					updatedMap = config.map.printMap(p)
 					res = updatedMap + "\n" + commandOutput
 					#print ('result\n', res)
 					connect.send(res.encode())
@@ -81,11 +81,12 @@ if __name__ == '__main__':
 		print(address, "is Player ", playerCount)
 		
 		#send hello
-		msg = 'welcome to orque\nPlayer ' + str(playerCount) + "\n" + config.map.printMap(playerCount)
+		p = Player(playerCount)
+		config.pL.append(p)
+		msg = 'welcome to orque\nPlayer ' + str(playerCount) + "\n" + config.map.printMap(p)
 		connect.send(msg.encode())
-		config.pL.append(Player(playerCount))
 		
-		thread = Thread(target=handler, args=(connect, playerCount))
+		thread = Thread(target=handler, args=(connect, p))
 		thread.start()
 		
 		playerCount += 1

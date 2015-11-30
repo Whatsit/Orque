@@ -56,23 +56,22 @@ class Map:
 				if onHold > 0:
 					x = 90
 				else:
-					x = randint(1,100)	#Decide on room type
+					x = randint(1,100)  # Decide on room type
 
 				if x >= 90:
-					#""" checks if room to be added is within 1 space of a puzzle room """
+					# Checks if room to be added is within 1 space of a puzzle room
 					for pRC in tmpPuzzleRoomCoord:
-						#if i == pRC[0]+1 or i == pRC[0]-1 or j == pRC[1]+1 or j == pRC[1]-1:
 						if manhattanDist([i,j],pRC) <= 2:
 							self.addRoom(i,j,Room())
 							boolBreakConstraint = True
 							onHold += 1
 							break
 					if boolBreakConstraint == False:
-						self.addRoom(i,j,Room(1))			#""" Initialize puzzle room """
-						tmpPuzzleRoomCoord.append([i,j])	#""" Temporarily store puzzle room coord in puzzle list ""
+						self.addRoom(i,j,Room(1))  # Initialize puzzle room
+						tmpPuzzleRoomCoord.append([i,j])  # Temporarily store puzzle room coord in puzzle list ""
 						onHold = 0
 				else:
-					self.addRoom(i,j,Room())	#""" Initialize normal room """
+					self.addRoom(i,j,Room())  # Initialize normal room
 
 				# Randomly initialize room adjacencies
 
@@ -122,7 +121,7 @@ class Map:
 
 		return tmpPuzzleRoomCoord
 
-	def printMap(self,id,type=0):
+	def printMap(self,p,type=0):
 		""" printMap
 
 		Prints the map. Red lines denote a locked door. Blue lines denote the player.
@@ -135,7 +134,7 @@ class Map:
 			midLine = ""
 			botLine = ""
 			for j in range(COLS):
-				if [i,j] in config.pL[id].playerPath or type == 1:
+				if type == 1 or [i,j] in p.playerPath:
 					#""" Top line North """
 					if self.layout[i][j].adjacencyList[0] == 1:
 						topLine += "  |  "
