@@ -121,7 +121,7 @@ class Map:
 
 		return tmpPuzzleRoomCoord
 
-	def printMap(self,id,type=0):
+	def printMap(self,p,type=0):
 		""" printMap
 
 		Prints the map. Red lines denote a locked door. Blue lines denote the player.
@@ -133,7 +133,7 @@ class Map:
 			midLine = ""
 			botLine = ""
 			for j in range(COLS):
-				if [i,j] in config.pL[id].playerPath or type == 1:
+				if type == 1 or [i,j] in p.playerPath:
 					#""" Top line North """
 					if self.layout[i][j].adjacencyList[0] == 1:
 						topLine += " | "

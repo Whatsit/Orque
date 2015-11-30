@@ -336,7 +336,7 @@ class Player:
 		newLoc = self.location
 		curRoom = config.map.layout[location[0]][location[1]]
 		print(curRoom.adjacencyList)
-		config.map.printMap(self.playerId)
+		config.map.printMap(self)
 		#move north
 		if dir == 0:
 			check = curRoom.adjacencyList[0]
@@ -457,7 +457,7 @@ class Player:
 					self.location = randomCoord()
 				self.playerPath.append(self.location)
 				config.map.layout[self.location[0]][self.location[1]].playerList.append(self)
-				config.map.printMap(self.playerId)
+				config.map.printMap(self)
 
 	def puzzleReward(self):
 		reward = Item(11,'reward')  #ToDo: A real reward

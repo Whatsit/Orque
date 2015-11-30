@@ -29,7 +29,7 @@ config.map = Map()
 config.map.randomConnectedMap()
 
 """ Initialize and spawn players """
-for p in range(0,2):
+for p in range(0,3):
 	tmpPlayer = Player(p)
 	config.pL.append(tmpPlayer)
 
@@ -90,7 +90,7 @@ while True:
 	removeDeadPlayers()
 	for p in config.pL:
 		print("Player ", p.playerId)
-		config.map.printMap(p.playerId)
+		config.map.printMap(p)
 		if(len(config.map.layout[p.location[0]][p.location[1]].playerList) > 1):
 			print("WARNING :: There is another player in the room!!!")
 
