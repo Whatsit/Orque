@@ -79,11 +79,11 @@ def removeDeadPlayers():
 	removeList = []
 	for p in config.pL:
 		if p.health <= 0:
+			config.map.layout[p.location[0]][p.location[1]].playerList.remove(p)
 			removeList.append(config.pL.index(p))
 	removeList.reverse()
 	for r in removeList:
 		print('Removed player %d' % r)
-		sleep(5)
 		config.pL.pop(r)
 
 while True:
