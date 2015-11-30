@@ -29,11 +29,7 @@ config.map = Map()
 config.map.randomConnectedMap()
 
 """ Initialize and spawn players """
-<<<<<<< HEAD
 for p in range(0,3):
-=======
-for p in range(0,2):
->>>>>>> refs/heads/pr/3
 	tmpPlayer = Player(p)
 	config.pL.append(tmpPlayer)
 
