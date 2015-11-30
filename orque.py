@@ -91,18 +91,11 @@ def removeDeadPlayers():
 		config.pL.pop(r)
 
 while True:
-<<<<<<< HEAD
 	removeDeadPlayers()
 	for p in config.pL:
 		print("Player ", p.playerId)
 		config.map.printMap(p)
 		if(len(config.map.layout[p.location[0]][p.location[1]].playerList) > 1):
-=======
-	for p in range(len(config.pL)):
-		print("Player ", p)
-		print(config.map.printMap(config.pL[p].playerId))
-		if(len(config.map.layout[config.pL[p].location[0]][config.pL[p].location[1]].playerList) > 1):
->>>>>>> refs/heads/pr/3
 			print("WARNING :: There is another player in the room!!!")
 
 		p.command = input("Input command: ")

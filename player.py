@@ -336,14 +336,9 @@ class Player:
 		location = self.location
 		newLoc = self.location
 		curRoom = config.map.layout[location[0]][location[1]]
-<<<<<<< HEAD
 		print(curRoom.adjacencyList)
 		config.map.printMap(self)
-=======
-		#print(curRoom.adjacencyList)
 		
-		#print(config.map.printMap(self.playerId))
->>>>>>> refs/heads/pr/3
 		#move north
 		if dir == 0:
 			check = curRoom.adjacencyList[0]
