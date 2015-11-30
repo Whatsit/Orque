@@ -86,7 +86,6 @@ def removeDeadPlayers():
 		sleep(5)
 		config.pL.pop(r)
 
-
 while True:
 	removeDeadPlayers()
 	for p in config.pL:
