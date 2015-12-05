@@ -71,22 +71,22 @@ config.map.layout[config.pL[0].location[0]][config.pL[0].location[1]].itemList.a
 """ Initial map """
 config.map.printMap(0,1)
 
-#UI test
-#ui = UI()
+if(config.enable_ui):
+	#UI ui
+	ui = UI()
+else:
+	while True:
+		for p in range(len(config.pL)):
+			print("Player ", p)
+			print(config.map.printMap(config.pL[p].playerId))
+			if(len(config.map.layout[config.pL[p].location[0]][config.pL[p].location[1]].playerList) > 1):
+				print("WARNING :: There is another player in the room!!!")
 
-
-while True:
-	for p in range(len(config.pL)):
-		print("Player ", p)
-		print(config.map.printMap(config.pL[p].playerId))
-		if(len(config.map.layout[config.pL[p].location[0]][config.pL[p].location[1]].playerList) > 1):
-			print("WARNING :: There is another player in the room!!!")
-
-		config.pL[p].command = input("Input command: ")
-		if config.pL[p].command == "exit":
-			sys.exit()
-		else:
-			print(config.pL[p].parseCommand())
+			config.pL[p].command = input("Input command: ")
+			if config.pL[p].command == "exit":
+				sys.exit()
+			else:
+				print(config.pL[p].parseCommand())
 		#config.pL[p].command = input("Press enter to continue: ")
 		#os.system('cls' if os.name == 'nt' else 'clear')
 
