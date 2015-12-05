@@ -5,11 +5,11 @@ the python code of Orque.
    a) Go to www.python.org/downloads
    b) Download Python 3.5.0
    c) Run the default installation
-2. Download the sorce code of Orque from the github
+2. Download the source code of Orque from the github
 3. Open a command window in the Orque folder
 4. Input 'python orque.py' to run Orque
 
---- Note for Google Protocol Buffers ---
+--- Google Protocol Buffers ---
 
 In order to run the version of Orque in the 'protoBuffer' folder of the repository
 which utilizes the Google Protocol Buffer, you will need to install them on your machine,
@@ -17,3 +17,28 @@ as well as set up the Python implementation which can be found in the 'python' f
 of the google/protobuf repository. Use the READMEs to guide your installation. Also note
 that the Google Protocol Buffers in the Google repository are only compatible with 
 Python 2 (version 2.6 or newer).
+
+--- Orque Multiplayer ---
+
+1. Starting the Server
+In order to run the multiplayer aspect of Orque, you must run server.py first. The 
+host/port settings for the server are contained in the config.py file. By default, the
+server runs on port 8080. This may be changed in the config file. To make the server 
+listen to connections from all computers on a network, leave the host variable blank.
+Changing that variable to a hostname/ip will make the server listen to only that computer.
+When the server has started in a terminal, it will print out the ip address and port that
+it is running on.
+
+2. Connecting to the Server
+To connect to the server, simple run the client.py file, and include 2 command line parameters:
+	1. the ip address of the server to connect to
+	2. the port that the server is listening on
+An example of running the client file would be :
+	> python client.py 255.255.0.255 8080
+	
+The second parameter for the server port is optional if the server has been started on the
+default port. If the port parameter is not specified, it will automatically try to connect
+to port 8080.
+
+Currently the multiplayer version of Orque supports player movement only. The puzzle rooms and
+attacking do not work.
