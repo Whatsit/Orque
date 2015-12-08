@@ -453,6 +453,8 @@ class Player:
 			else:
 				print("Were you dropped as a baby? Welp, doesnt matter now, you're dead!")
 				#ToDo: Kill the player, temp: Randomly teleport player
+				self.health == 0
+				print('Lol get gud!')
 				config.map.layout[self.location[0]][self.location[1]].playerList.remove(self)
 				self.location = randomCoord()
 				while config.map.layout[self.location[0]][self.location[1]].roomType == 1:
